@@ -2,12 +2,20 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Library, FileText, Settings, Users, LogOut, FileCheck, Menu, X } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { LayoutDashboard, Library, FileText, Settings, Users, LogOut, FileCheck, Menu, X, Power } from 'lucide-react'
+import { useAuth } from '@/context/AuthContext'
 
 export default function AdminSidebar({ user }: { user: any }) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
+  const { logout } = useAuth()
+
+  const handleLogout = async () => {
+    await logout()
+    router.push('/auth/login')
+  }
 
   const closeSidebar = () => setIsOpen(false)
 
@@ -70,9 +78,17 @@ export default function AdminSidebar({ user }: { user: any }) {
               <p className="text-xs text-slate-400 truncate">Super Admin</p>
             </div>
           </div>
-          <Link href="/" className="mt-4 flex items-center justify-center gap-2 w-full px-3 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
-            <LogOut size={16} /> Exit to Site
-          </Link>
+          <div className="mt-4 flex flex-col gap-2">
+            <Link href="/" className="flex items-center justify-center gap-2 w-full px-3 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors hover:bg-slate-800 rounded-lg">
+              <LogOut size={16} /> Exit to Site
+            </Link>
+            <button 
+              onClick={handleLogout}
+              className="flex items-center justify-center gap-2 w-full px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 transition-colors hover:bg-red-400/10 rounded-lg"
+            >
+              <Power size={16} /> Log Out
+            </button>
+          </div>
         </div>
       </aside>
     </>
