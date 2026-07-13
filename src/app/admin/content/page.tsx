@@ -61,7 +61,7 @@ export default function ContentManager() {
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Content Manager</h1>
-        <p className="text-gray-500 mt-1">Directly publish books, journals, papers, and poetry to the platform.</p>
+        <p className="text-gray-500 mt-1">Directly publish books, papers, poetry, short stories, and the simla review.</p>
       </div>
 
       <div className="flex gap-4 border-b border-gray-200 pb-4 overflow-x-auto">
@@ -69,9 +69,17 @@ export default function ContentManager() {
           <button 
             key={tab}
             onClick={() => setActiveTab(tab as any)}
-            className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all whitespace-nowrap ${activeTab === tab ? 'bg-indigo-50 text-indigo-700' : 'text-gray-500 hover:bg-gray-50'}`}
+            className={`px-6 py-3 font-medium text-sm rounded-full transition-all whitespace-nowrap ${
+              activeTab === tab 
+                ? 'bg-blue-50 text-blue-700 shadow-sm ring-1 ring-blue-700/10' 
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+            }`}
           >
-            Publish {tab.charAt(0).toUpperCase() + tab.slice(1).replace('paper', 'Research Paper').replace('Journal', 'Short Story').replace('Article', 'The Simla Review')}
+            {tab === 'book' && 'Publish Book'}
+            {tab === 'paper' && 'Publish Paper'}
+            {tab === 'poem' && 'Publish Poem'}
+            {tab === 'journal' && 'Publish Short Story'}
+            {tab === 'article' && 'Publish The Simla Review'}
           </button>
         ))}
       </div>
