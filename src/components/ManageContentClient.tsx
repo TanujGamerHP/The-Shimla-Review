@@ -99,15 +99,15 @@ export default function ManageContentClient({ items }: { items: ManageContentIte
                     <td className="px-6 py-4">
                       <p className="font-medium text-gray-900 line-clamp-1">{item.title}</p>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full whitespace-nowrap">
                         {item.type}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500">
                       {item.views}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       {new Date(item.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right space-x-3 whitespace-nowrap">

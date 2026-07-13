@@ -25,9 +25,9 @@ export default async function AdminDashboard() {
           <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <div>
-            <p className="text-sm font-medium text-gray-500">Total Followers</p>
-            <p className="text-3xl font-bold text-gray-900">{totalFollowers.toLocaleString()}</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-gray-500 whitespace-nowrap truncate">Total Followers</p>
+            <p className="text-2xl xl:text-3xl font-bold text-gray-900 truncate">{totalFollowers.toLocaleString()}</p>
           </div>
         </div>
         {/* Book Views */}
@@ -35,9 +35,9 @@ export default async function AdminDashboard() {
           <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
             <BookOpen size={24} />
           </div>
-          <div>
-            <p className="text-sm font-medium text-gray-500">Total Book Views</p>
-            <p className="text-3xl font-bold text-gray-900">{bookViews._sum.views?.toLocaleString() || 0}</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-gray-500 whitespace-nowrap truncate">Total Book Views</p>
+            <p className="text-2xl xl:text-3xl font-bold text-gray-900 truncate">{bookViews._sum.views?.toLocaleString() || 0}</p>
           </div>
         </div>
         
@@ -46,9 +46,9 @@ export default async function AdminDashboard() {
           <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
             <GraduationCap size={24} />
           </div>
-          <div>
-            <p className="text-sm font-medium text-gray-500">Total Paper Views</p>
-            <p className="text-3xl font-bold text-gray-900">{paperViews._sum.views?.toLocaleString() || 0}</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-gray-500 whitespace-nowrap truncate">Total Paper Views</p>
+            <p className="text-2xl xl:text-3xl font-bold text-gray-900 truncate">{paperViews._sum.views?.toLocaleString() || 0}</p>
           </div>
         </div>
 
@@ -57,9 +57,9 @@ export default async function AdminDashboard() {
           <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
             <Feather size={24} />
           </div>
-          <div>
-            <p className="text-sm font-medium text-gray-500">Total Poetry Views</p>
-            <p className="text-3xl font-bold text-gray-900">{poemViews._sum.views?.toLocaleString() || 0}</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-gray-500 whitespace-nowrap truncate">Total Poetry Views</p>
+            <p className="text-2xl xl:text-3xl font-bold text-gray-900 truncate">{poemViews._sum.views?.toLocaleString() || 0}</p>
           </div>
         </div>
 
@@ -68,9 +68,9 @@ export default async function AdminDashboard() {
           <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center">
             <FileText size={24} />
           </div>
-          <div>
-            <p className="text-sm font-medium text-gray-500">Total Article Views</p>
-            <p className="text-3xl font-bold text-gray-900">{articleViews._sum.views?.toLocaleString() || 0}</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-gray-500 whitespace-nowrap truncate">Total Article Views</p>
+            <p className="text-2xl xl:text-3xl font-bold text-gray-900 truncate">{articleViews._sum.views?.toLocaleString() || 0}</p>
           </div>
         </div>
       </div>
