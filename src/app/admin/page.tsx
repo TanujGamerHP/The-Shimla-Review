@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { PrismaClient } from '@prisma/client'
 import { BookOpen, GraduationCap, Feather, FileText } from 'lucide-react'
 

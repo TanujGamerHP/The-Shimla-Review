@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Link from 'next/link'
 import { Download, ArrowLeft } from 'lucide-react'
 import { PrismaClient } from '@prisma/client'

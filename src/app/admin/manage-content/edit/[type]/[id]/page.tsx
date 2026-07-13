@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { PrismaClient } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import EditContentClient from '@/components/EditContentClient'
