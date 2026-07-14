@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 
 const prisma = new PrismaClient()
 
-export async function updateHomeProfile(data: { name: string; avatarUrl: string; bio: string }) {
+export async function updateHomeProfile(data: { name: string; avatarUrl: string; bio: string; followers: number; views: number }) {
   try {
     const adminEmail = 'theshimlareview@gmail.com'
     
@@ -14,7 +14,9 @@ export async function updateHomeProfile(data: { name: string; avatarUrl: string;
       data: {
         name: data.name,
         avatarUrl: data.avatarUrl,
-        bio: data.bio
+        bio: data.bio,
+        followers: data.followers,
+        views: data.views
       }
     })
 

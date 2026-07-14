@@ -8,7 +8,9 @@ export default function HomeProfilePage() {
   const [formData, setFormData] = useState({
     name: '',
     avatarUrl: '',
-    bio: ''
+    bio: '',
+    followers: 0,
+    views: 0
   })
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState('')
@@ -26,7 +28,9 @@ export default function HomeProfilePage() {
           setFormData({
             name: data.user.name || '',
             avatarUrl: data.user.avatarUrl || '',
-            bio: data.user.bio || ''
+            bio: data.user.bio || '',
+            followers: data.user.followers || 0,
+            views: data.user.views || 0
           })
         }
       })
@@ -49,7 +53,11 @@ export default function HomeProfilePage() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    const { name, value, type } = e.target
+    setFormData({ 
+      ...formData, 
+      [name]: type === 'number' ? Number(value) : value 
+    })
   }
 
   return (
@@ -108,6 +116,34 @@ export default function HomeProfilePage() {
             className="w-full border border-gray-200 rounded-md px-4 py-3 focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all resize-y"
             placeholder="A short introduction..."
           />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Followers</label>
+            <input 
+              type="number" 
+              name="followers" 
+              value={formData.followers} 
+              onChange={handleChange} 
+              className="w-full border border-gray-200 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all"
+              placeholder="0"
+              min="0"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Public Views</label>
+            <input 
+              type="number" 
+              name="views" 
+              value={formData.views} 
+              onChange={handleChange} 
+              className="w-full border border-gray-200 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all"
+              placeholder="0"
+              min="0"
+            />
+          </div>
         </div>
 
         <button 
