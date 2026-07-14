@@ -9,8 +9,8 @@ export default function HomeProfilePage() {
     name: '',
     avatarUrl: '',
     bio: '',
-    followers: 0,
-    views: 0
+    followers: '0',
+    views: '0'
   })
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState('')
@@ -29,8 +29,8 @@ export default function HomeProfilePage() {
             name: data.user.name || '',
             avatarUrl: data.user.avatarUrl || '',
             bio: data.user.bio || '',
-            followers: data.user.followers || 0,
-            views: data.user.views || 0
+            followers: data.user.followersDisplay || '0',
+            views: data.user.viewsDisplay || '0'
           })
         }
       })
@@ -53,11 +53,7 @@ export default function HomeProfilePage() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target
-    setFormData({ 
-      ...formData, 
-      [name]: type === 'number' ? Number(value) : value 
-    })
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   return (
@@ -122,26 +118,24 @@ export default function HomeProfilePage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Followers</label>
             <input 
-              type="number" 
+              type="text" 
               name="followers" 
               value={formData.followers} 
               onChange={handleChange} 
               className="w-full border border-gray-200 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all"
-              placeholder="0"
-              min="0"
+              placeholder="e.g. 4337 or 4.3k"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Public Views</label>
             <input 
-              type="number" 
+              type="text" 
               name="views" 
               value={formData.views} 
               onChange={handleChange} 
               className="w-full border border-gray-200 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all"
-              placeholder="0"
-              min="0"
+              placeholder="e.g. 2 Top 4%"
             />
           </div>
         </div>

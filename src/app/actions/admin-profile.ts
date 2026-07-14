@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 
 const prisma = new PrismaClient()
 
-export async function updateHomeProfile(data: { name: string; avatarUrl: string; bio: string; followers: number; views: number }) {
+export async function updateHomeProfile(data: { name: string; avatarUrl: string; bio: string; followers: string; views: string }) {
   try {
     const adminEmail = 'theshimlareview@gmail.com'
     
@@ -14,10 +14,20 @@ export async function updateHomeProfile(data: { name: string; avatarUrl: string;
       data: {
         name: data.name,
         avatarUrl: data.avatarUrl,
-        bio: data.bio,
-        followers: data.followers,
-        views: data.views
+        bio: data.bio
       }
+    })
+
+    await prisma.settings.upsert({
+      where: { key: 'home_followers_display' },
+      update: { value: data.followers },
+      create: { key: 'home_followers_display', value: data.followers }
+    })
+
+    await prisma.settings.upsert({
+      where: { key: 'home_views_display' },
+      update: { value: data.views },
+      create: { key: 'home_views_display', value: data.views }
     })
 
     revalidatePath('/')

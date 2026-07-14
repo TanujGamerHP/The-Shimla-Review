@@ -51,13 +51,17 @@ export default async function Home() {
     where: { email: 'theshimlareview@gmail.com' }
   })
 
+  const settings = await prisma.settings.findMany({
+    where: { key: { in: ['home_followers_display', 'home_views_display'] } }
+  })
+  const getSetting = (key: string, def: string) => settings.find(s => s.key === key)?.value || def
+
   const adminData = {
     name: adminUser?.name || 'Sandeep Sharma',
     avatarUrl: adminUser?.avatarUrl || null,
     bio: adminUser?.bio || null,
-    followers: adminUser?.followers ?? 0,
-    following: adminUser?.following ?? 0,
-    views: adminUser?.views ?? 0
+    followersDisplay: getSetting('home_followers_display', adminUser?.followers?.toString() || '0'),
+    viewsDisplay: getSetting('home_views_display', adminUser?.views?.toString() || '0')
   }
 
   if (!user) return <div className="p-10">Database not seeded. Run seed script.</div>

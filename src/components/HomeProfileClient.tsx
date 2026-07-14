@@ -10,20 +10,22 @@ interface AdminData {
   name: string
   avatarUrl: string | null
   bio: string | null
-  followers: number
-  following: number
-  views: number
+  followersDisplay: string
+  viewsDisplay: string
 }
 
 export default function HomeProfileClient({ adminData }: { adminData: AdminData }) {
-  const [followers, setFollowers] = useState(adminData.followers)
+  const [followers, setFollowers] = useState(adminData.followersDisplay)
   const [isFollowing, setIsFollowing] = useState(false)
 
   const handleFollow = async () => {
     if (isFollowing) return // Prevent multiple clicks for now
     
-    // Optimistic UI update
-    setFollowers(prev => prev + 1)
+    // Optimistic UI update for numbers if possible
+    setFollowers(prev => {
+      const num = parseInt(prev.replace(/,/g, ''))
+      return isNaN(num) ? prev : (num + 1).toString()
+    })
     setIsFollowing(true)
 
     // Call server action
@@ -61,12 +63,12 @@ export default function HomeProfileClient({ adminData }: { adminData: AdminData 
         <div className="flex flex-col w-full text-[13px] mb-6">
           <div className="flex items-center justify-between py-1.5">
             <span className="text-gray-800">Followers</span>
-            <span className="text-[#185ADB] font-medium hover:underline cursor-pointer">{followers.toLocaleString()}</span>
+            <span className="text-[#185ADB] font-medium hover:underline cursor-pointer">{followers}</span>
           </div>
           <div className="flex items-center justify-between py-1.5">
             <span className="text-gray-800">Public Views</span>
             <span className="text-[#185ADB] font-medium hover:underline cursor-pointer">
-              {adminData.views.toLocaleString()} <span className="ml-1 text-[#185ADB]">Top 4%</span>
+              {adminData.viewsDisplay}
             </span>
           </div>
         </div>
