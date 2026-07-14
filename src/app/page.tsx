@@ -24,23 +24,23 @@ export default async function Home() {
 
   const allItems: ProfileFeedItem[] = [
     ...books.map(b => ({
-      id: b.id, type: 'Book', title: b.title, abstract: b.synopsis,
+      id: b.id, type: 'Book', title: b.title, subtitle: b.subtitle, abstract: b.synopsis,
       institution: b.publisher, views: b.views, thumbnailUrl: b.coverImageUrl,
       createdAt: b.createdAt, slug: b.slug, downloadUrl: b.downloadUrl,
       price: b.price, purchaseUrl: b.purchaseUrl
     })),
     ...poems.map(p => ({
-      id: p.id, type: 'Poetry', title: p.title, abstract: p.content,
+      id: p.id, type: 'Poetry', title: p.title, subtitle: p.subtitle, abstract: p.content,
       institution: p.language, views: p.views, thumbnailUrl: p.coverImageUrl,
       createdAt: p.createdAt, slug: p.slug, downloadUrl: p.downloadUrl
     })),
     ...researchPapers.map(r => ({
-      id: r.id, type: 'Research Paper', title: r.title, abstract: r.abstract,
+      id: r.id, type: 'Research Paper', title: r.title, subtitle: r.subtitle, abstract: r.abstract,
       institution: r.doi, views: r.views, thumbnailUrl: r.coverImageUrl || r.previewUrl,
       createdAt: r.createdAt, slug: r.slug, downloadUrl: r.downloadUrl
     })),
     ...articles.map(a => ({
-      id: a.id, type: 'The Simla Review', title: a.title, abstract: a.subtitle,
+      id: a.id, type: 'The Simla Review', title: a.title, subtitle: a.subtitle, abstract: a.content,
       institution: 'Editorial', views: a.views, thumbnailUrl: a.coverImageUrl,
       createdAt: a.createdAt, slug: a.slug, downloadUrl: null
     }))

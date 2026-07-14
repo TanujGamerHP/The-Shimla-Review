@@ -62,6 +62,7 @@ model Article {
 model Book {
   id              String    @id @default(cuid())
   title           String
+  subtitle        String?
   synopsis        String?
   slug            String    @unique
   coverImageUrl   String?
@@ -87,6 +88,7 @@ model Book {
 model Poem {
   id        String   @id @default(cuid())
   title     String
+  subtitle  String?
   content   String
   slug      String   @unique
   language      String?
@@ -108,7 +110,8 @@ model Poem {
 model ResearchPaper {
   id          String   @id @default(cuid())
   title       String
-  abstract      String?
+  subtitle    String?
+  abstract    String?
   slug          String   @unique
   doi           String?
   coverImageUrl String?
@@ -129,6 +132,7 @@ model ResearchPaper {
 model Journal {
   id              String    @id @default(cuid())
   title           String
+  subtitle        String?
   volume          String?
   issue           String?
   slug            String    @unique

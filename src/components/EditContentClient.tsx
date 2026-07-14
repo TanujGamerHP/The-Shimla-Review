@@ -80,6 +80,12 @@ export default function EditContentClient({ type, data }: { type: string, data: 
                 <input type="text" name="title" required defaultValue={data.title} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
               <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" defaultValue={data.subtitle} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700">Price (₹)</label>
                 <input type="number" name="price" step="0.01" min="0" defaultValue={data.price} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
@@ -103,11 +109,15 @@ export default function EditContentClient({ type, data }: { type: string, data: 
                 <input type="text" name="title" required defaultValue={data.title} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Volume & Issue</label>
-                <div className="flex gap-4">
-                  <input type="text" name="volume" required defaultValue={data.volume} className="w-1/2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
-                  <input type="text" name="issue" required defaultValue={data.issue} className="w-1/2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
-                </div>
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" defaultValue={data.subtitle} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
+              </div>
+            </div>
+            <div className="space-y-2 mt-6">
+              <label className="text-sm font-semibold text-gray-700">Volume & Issue</label>
+              <div className="flex gap-4">
+                <input type="text" name="volume" required defaultValue={data.volume} className="w-1/2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
+                <input type="text" name="issue" required defaultValue={data.issue} className="w-1/2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
             </div>
             <div className="space-y-2">
@@ -125,9 +135,13 @@ export default function EditContentClient({ type, data }: { type: string, data: 
                 <input type="text" name="title" required defaultValue={data.title} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">DOI (Optional)</label>
-                <input type="text" name="doi" defaultValue={data.doi} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" defaultValue={data.subtitle} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
+            </div>
+            <div className="space-y-2 mt-6">
+              <label className="text-sm font-semibold text-gray-700">DOI (Optional)</label>
+              <input type="text" name="doi" defaultValue={data.doi} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Abstract</label>
@@ -144,9 +158,13 @@ export default function EditContentClient({ type, data }: { type: string, data: 
                 <input type="text" name="title" required defaultValue={data.title} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Language</label>
-                <input type="text" name="language" defaultValue={data.language} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" defaultValue={data.subtitle} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
+            </div>
+            <div className="space-y-2 mt-6">
+              <label className="text-sm font-semibold text-gray-700">Language</label>
+              <input type="text" name="language" defaultValue={data.language} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Poem Content</label>

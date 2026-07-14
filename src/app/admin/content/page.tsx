@@ -102,13 +102,19 @@ export default function ContentManager() {
                 <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="The Great Shimla Anthology" />
               </div>
               <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="A collection of short stories" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700">Price (₹)</label>
                 <input type="number" name="price" step="0.01" min="0" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="499.00" />
               </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">Purchase / Amazon URL (Optional)</label>
-              <input type="url" name="purchaseUrl" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="https://amazon.in/book-link" />
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">Purchase / Amazon URL (Optional)</label>
+                <input type="url" name="purchaseUrl" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="https://amazon.in/book-link" />
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Synopsis</label>
@@ -127,9 +133,13 @@ export default function ContentManager() {
                 <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="Semiotics of Himalayan Architecture" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">DOI (Optional)</label>
-                <input type="text" name="doi" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="10.1000/xyz123" />
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="A comprehensive study" />
               </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">DOI (Optional)</label>
+              <input type="text" name="doi" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="10.1000/xyz123" />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Abstract</label>
@@ -146,9 +156,13 @@ export default function ContentManager() {
                 <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="Ode to the Pines" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Language</label>
-                <input type="text" name="language" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="English, Hindi, etc." />
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="A short poem" />
               </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">Language</label>
+              <input type="text" name="language" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="English, Hindi, etc." />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Poem Content (Optional if uploading PDF)</label>
@@ -165,9 +179,13 @@ export default function ContentManager() {
                 <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="The Midnight Train" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Author / Volume (Optional)</label>
-                <input type="text" name="volume" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="e.g. Vol 2 or Author Name" />
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="A short story about..." />
               </div>
+            </div>
+            <div className="space-y-2 mt-6">
+              <label className="text-sm font-semibold text-gray-700">Author / Volume (Optional)</label>
+              <input type="text" name="volume" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="e.g. Vol 2 or Author Name" />
             </div>
           </>
         )}

@@ -34,6 +34,7 @@ export async function createBook(formData: FormData) {
     const admin = await requireSuperAdmin()
     
     const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
     const synopsis = formData.get('synopsis') as string
     const priceStr = formData.get('price') as string
     const price = priceStr ? parseFloat(priceStr) : null
@@ -50,6 +51,7 @@ export async function createBook(formData: FormData) {
     await prisma.book.create({
       data: {
         title,
+        subtitle,
         synopsis,
         slug,
         price,
@@ -74,6 +76,7 @@ export async function createJournal(formData: FormData) {
     await requireSuperAdmin()
     
     const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
     const volume = formData.get('volume') as string
     const issue = formData.get('issue') as string
     const editorialBoard = formData.get('editorialBoard') as string
@@ -89,6 +92,7 @@ export async function createJournal(formData: FormData) {
     await prisma.journal.create({
       data: {
         title,
+        subtitle,
         volume,
         issue,
         editorialBoard,
@@ -112,6 +116,7 @@ export async function createResearchPaper(formData: FormData) {
     const admin = await requireSuperAdmin()
     
     const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
     const abstract = formData.get('abstract') as string
     const doi = formData.get('doi') as string
     
@@ -126,6 +131,7 @@ export async function createResearchPaper(formData: FormData) {
     await prisma.researchPaper.create({
       data: {
         title,
+        subtitle,
         abstract,
         doi,
         slug,
@@ -149,6 +155,7 @@ export async function createPoem(formData: FormData) {
     const admin = await requireSuperAdmin()
     
     const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
     const content = formData.get('content') as string
     const language = formData.get('language') as string
     
@@ -163,6 +170,7 @@ export async function createPoem(formData: FormData) {
     await prisma.poem.create({
       data: {
         title,
+        subtitle,
         content,
         language,
         slug,
@@ -297,6 +305,7 @@ export async function updateBook(id: string, formData: FormData) {
     await requireSuperAdmin()
     
     const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
     const synopsis = formData.get('synopsis') as string
     const priceStr = formData.get('price') as string
     const price = priceStr ? parseFloat(priceStr) : null
@@ -305,7 +314,7 @@ export async function updateBook(id: string, formData: FormData) {
     const imageFile = formData.get('coverImage') as File | null
     const pdfFile = formData.get('pdfDocument') as File | null
     
-    const data: any = { title, synopsis, price, purchaseUrl }
+    const data: any = { title, subtitle, synopsis, price, purchaseUrl }
     
     if (imageFile && imageFile.size > 0) {
       data.coverImageUrl = await uploadFile(imageFile, 'books', 'book-cover')
@@ -328,6 +337,7 @@ export async function updateJournal(id: string, formData: FormData) {
     await requireSuperAdmin()
     
     const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
     const volume = formData.get('volume') as string
     const issue = formData.get('issue') as string
     const editorialBoard = formData.get('editorialBoard') as string
@@ -335,7 +345,7 @@ export async function updateJournal(id: string, formData: FormData) {
     const imageFile = formData.get('coverImage') as File | null
     const pdfFile = formData.get('pdfDocument') as File | null
     
-    const data: any = { title, volume, issue, editorialBoard }
+    const data: any = { title, subtitle, volume, issue, editorialBoard }
     
     if (imageFile && imageFile.size > 0) {
       data.coverImageUrl = await uploadFile(imageFile, 'journals', 'journal-cover')
@@ -358,13 +368,14 @@ export async function updateResearchPaper(id: string, formData: FormData) {
     await requireSuperAdmin()
     
     const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
     const abstract = formData.get('abstract') as string
     const doi = formData.get('doi') as string
     
     const imageFile = formData.get('coverImage') as File | null
     const pdfFile = formData.get('pdfDocument') as File | null
     
-    const data: any = { title, abstract, doi }
+    const data: any = { title, subtitle, abstract, doi }
     
     if (imageFile && imageFile.size > 0) {
       data.coverImageUrl = await uploadFile(imageFile, 'papers', 'paper-cover')
@@ -387,13 +398,14 @@ export async function updatePoem(id: string, formData: FormData) {
     await requireSuperAdmin()
     
     const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
     const content = formData.get('content') as string
     const language = formData.get('language') as string
     
     const imageFile = formData.get('coverImage') as File | null
     const pdfFile = formData.get('pdfDocument') as File | null
     
-    const data: any = { title, content, language }
+    const data: any = { title, subtitle, content, language }
     
     if (imageFile && imageFile.size > 0) {
       data.coverImageUrl = await uploadFile(imageFile, 'poetry', 'poem-cover')

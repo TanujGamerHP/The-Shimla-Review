@@ -7,6 +7,7 @@ export type ProfileFeedItem = {
   id: string
   type: string
   title: string
+  subtitle?: string | null
   abstract: string | null
   institution: string | null
   views: number

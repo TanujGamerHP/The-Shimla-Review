@@ -82,22 +82,36 @@ export default function PaperItem({ paper }: PaperProps) {
           <h3 className="text-2xl sm:text-3xl font-bold mb-2 leading-tight transition-colors group-hover:text-emerald-700">
             {paper.title}
           </h3>
+          {paper.subtitle && (
+            <p className="text-lg text-gray-600 mb-2 font-medium">{paper.subtitle}</p>
+          )}
           
           <p className="text-xl font-semibold text-gray-900 mb-4">
             {paper.price ? `₹${paper.price}` : 'Price on Request'}
           </p>
           
           {paper.abstract && (
-            <div className="mb-6 max-w-2xl">
+            <div className="mb-6 max-w-2xl relative">
               <p className={`text-gray-600 text-sm leading-relaxed whitespace-pre-wrap ${!isExpanded ? 'line-clamp-2 overflow-hidden' : ''}`}>
                 {renderTextWithLinks(paper.abstract)}
               </p>
-              <button 
-                onClick={(e) => { e.preventDefault(); setIsExpanded(!isExpanded); }}
-                className="text-emerald-600 hover:underline font-bold text-sm mt-1"
-              >
-                {isExpanded ? 'Read less ▴' : 'Read more ▾'}
-              </button>
+              {!isExpanded ? (
+                <div className="absolute bottom-0 right-0 bg-gradient-to-l from-white via-white to-transparent pl-8 pt-0 flex items-center justify-end group-hover:from-white group-hover:via-white">
+                  <button 
+                    onClick={(e) => { e.preventDefault(); setIsExpanded(true); }}
+                    className="text-emerald-600 hover:underline font-bold text-sm ml-1 bg-white group-hover:bg-white"
+                  >
+                    ...more ▾
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  onClick={(e) => { e.preventDefault(); setIsExpanded(false); }}
+                  className="text-emerald-600 hover:underline font-bold text-sm mt-1 block"
+                >
+                  less ▴
+                </button>
+              )}
             </div>
           )}
 
@@ -151,22 +165,36 @@ export default function PaperItem({ paper }: PaperProps) {
             {paper.title}
           </h3>
         </Link>
+        {paper.subtitle && (
+          <p className="text-md text-gray-600 mb-2 font-medium">{paper.subtitle}</p>
+        )}
         
         {paper.institution && (
           <p className="text-sm text-gray-600 mb-4">{paper.institution}</p>
         )}
         
         {paper.abstract && (
-          <div className="mb-6 max-w-3xl">
-            <p className={`text-gray-700 text-sm leading-relaxed whitespace-pre-wrap ${!isExpanded ? 'line-clamp-1 overflow-hidden' : ''}`}>
+          <div className="mb-6 max-w-3xl relative">
+            <p className={`text-gray-700 text-sm leading-relaxed whitespace-pre-wrap ${!isExpanded ? 'line-clamp-2 overflow-hidden' : ''}`}>
               {renderTextWithLinks(paper.abstract)}
             </p>
-            <button 
-              onClick={(e) => { e.preventDefault(); setIsExpanded(!isExpanded); }}
-              className="text-accent hover:underline font-bold text-sm mt-1"
-            >
-              {isExpanded ? 'less ▴' : 'more ▾'}
-            </button>
+            {!isExpanded ? (
+              <div className="absolute bottom-0 right-0 bg-gradient-to-l from-white via-white to-transparent pl-8 pt-0 flex items-center justify-end group-hover:from-white group-hover:via-white">
+                <button 
+                  onClick={(e) => { e.preventDefault(); setIsExpanded(true); }}
+                  className="text-accent hover:underline font-bold text-sm ml-1 bg-white group-hover:bg-white"
+                >
+                  ...more ▾
+                </button>
+              </div>
+            ) : (
+              <button 
+                onClick={(e) => { e.preventDefault(); setIsExpanded(false); }}
+                className="text-accent hover:underline font-bold text-sm mt-1 block"
+              >
+                less ▴
+              </button>
+            )}
           </div>
         )}
 
