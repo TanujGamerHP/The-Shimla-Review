@@ -1,13 +1,7 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Sora } from 'next/font/google'
+import { Sora } from 'next/font/google'
 import { AuthProvider } from "@/context/AuthContext"
 import './globals.css'
-
-const cormorant = Cormorant_Garamond({ 
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-heading'
-})
 
 const sora = Sora({ 
   subsets: ['latin'],
@@ -25,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${sora.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${sora.variable}`} suppressHydrationWarning>
       <body className="font-sans bg-[#FAFAFA] text-[#111111] antialiased" suppressHydrationWarning>
         <AuthProvider>
           {children}

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,400,900&display=swap');
 
 @theme {
   --color-primary: #0A192F;
@@ -29,7 +30,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading), serif;
+    font-family: 'Cabinet Grotesk', sans-serif;
     font-weight: 700;
     color: var(--primary);
   }

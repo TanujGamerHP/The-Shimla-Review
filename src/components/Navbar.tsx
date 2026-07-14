@@ -25,7 +25,7 @@ export default function Navbar() {
         <div className="flex items-center gap-8 shrink-0">
           <Link href="/" className="flex items-center gap-3 group">
             <h1 className="text-2xl font-bold tracking-tight text-primary transition-transform group-hover:scale-105" style={{ textShadow: '0 0 1px currentColor' }}>
-              The Shimla Review
+              Prof. Sandeep Sharma
             </h1>
           </Link>
         </div>
