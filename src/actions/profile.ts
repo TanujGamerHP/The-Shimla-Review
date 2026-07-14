@@ -2,7 +2,7 @@
 
 import { PrismaClient } from '@prisma/client'
 import { getSessionUser } from './auth'
-import { adminStorage } from '@/lib/firebase-admin'
+import { put } from '@vercel/blob'
 
 const prisma = new PrismaClient()
 
@@ -35,21 +35,13 @@ export async function updateProfile(formData: FormData) {
         return { error: 'Image size must be less than 5MB.' }
       }
 
-      const buffer = Buffer.from(await profilePhoto.arrayBuffer())
-      const filename = `${sessionUser.id}-${Date.now()}-${profilePhoto.name.replace(/[^a-zA-Z0-9.-]/g, '')}`
+      const filename = `profiles/${sessionUser.id}-${Date.now()}-${profilePhoto.name.replace(/[^a-zA-Z0-9.-]/g, '')}`
       
-      const bucket = adminStorage.bucket()
-      const fileRef = bucket.file(`uploads/profiles/${filename}`)
-      
-      await fileRef.save(buffer, {
-        metadata: {
-          contentType: profilePhoto.type || 'image/jpeg',
-        }
+      const blob = await put(filename, profilePhoto, {
+        access: 'public',
       })
       
-      await fileRef.makePublic()
-      
-      avatarUrl = `https://storage.googleapis.com/${bucket.name}/${fileRef.name}`
+      avatarUrl = blob.url
     }
 
     // Update the database

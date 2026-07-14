@@ -3,7 +3,7 @@
 import { PrismaClient } from '@prisma/client'
 import { getSessionUser } from './auth'
 import { revalidatePath } from 'next/cache'
-import { adminStorage } from '@/lib/firebase-admin'
+import { put } from '@vercel/blob'
 
 const prisma = new PrismaClient()
 
@@ -16,26 +16,17 @@ async function requireSuperAdmin() {
   return user
 }
 
-// Universal file uploader helper using Firebase Storage
+// Universal file uploader helper using Vercel Blob
 async function uploadFile(file: File, folder: string, prefix: string) {
   if (!file || file.size === 0) return null
-  const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes)
   
-  const filename = `${prefix}-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`
-  const bucket = adminStorage.bucket()
-  const fileRef = bucket.file(`uploads/${folder}/${filename}`)
+  const filename = `${folder}/${prefix}-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`
   
-  await fileRef.save(buffer, {
-    metadata: {
-      contentType: file.type || 'application/octet-stream',
-    }
+  const blob = await put(filename, file, {
+    access: 'public',
   })
   
-  // Make it public so it can be viewed by anyone
-  await fileRef.makePublic()
-  
-  return `https://storage.googleapis.com/${bucket.name}/${fileRef.name}`
+  return blob.url
 }
 
 export async function createBook(formData: FormData) {
