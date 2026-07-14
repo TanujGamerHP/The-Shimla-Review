@@ -3,8 +3,7 @@
 import { PrismaClient } from '@prisma/client'
 import { getSessionUser } from './auth'
 import { revalidatePath } from 'next/cache'
-import { writeFile } from 'fs/promises'
-import path from 'path'
+import { adminStorage } from '@/lib/firebase-admin'
 
 const prisma = new PrismaClient()
 
@@ -17,17 +16,26 @@ async function requireSuperAdmin() {
   return user
 }
 
-// Universal file uploader helper
+// Universal file uploader helper using Firebase Storage
 async function uploadFile(file: File, folder: string, prefix: string) {
   if (!file || file.size === 0) return null
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
   
   const filename = `${prefix}-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`
-  const filepath = path.join(process.cwd(), 'public', 'uploads', folder, filename)
+  const bucket = adminStorage.bucket()
+  const fileRef = bucket.file(`uploads/${folder}/${filename}`)
   
-  await writeFile(filepath, buffer)
-  return `/uploads/${folder}/${filename}`
+  await fileRef.save(buffer, {
+    metadata: {
+      contentType: file.type || 'application/octet-stream',
+    }
+  })
+  
+  // Make it public so it can be viewed by anyone
+  await fileRef.makePublic()
+  
+  return `https://storage.googleapis.com/${bucket.name}/${fileRef.name}`
 }
 
 export async function createBook(formData: FormData) {

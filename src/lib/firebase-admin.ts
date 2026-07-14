@@ -1,5 +1,6 @@
 import { getApps, initializeApp, cert } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
+import { getStorage } from 'firebase-admin/storage';
 
 if (!getApps().length) {
   try {
@@ -10,6 +11,7 @@ if (!getApps().length) {
         // Handle escaped newline characters from .env
         privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
       }),
+      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
     });
   } catch (error) {
     console.error('Firebase admin initialization error', error);
@@ -17,3 +19,4 @@ if (!getApps().length) {
 }
 
 export const adminAuth = getAuth();
+export const adminStorage = getStorage();

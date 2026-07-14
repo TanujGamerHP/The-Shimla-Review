@@ -2,8 +2,7 @@
 
 import { PrismaClient } from '@prisma/client'
 import { getSessionUser } from './auth'
-import { writeFile } from 'fs/promises'
-import path from 'path'
+import { adminStorage } from '@/lib/firebase-admin'
 
 const prisma = new PrismaClient()
 
@@ -37,15 +36,20 @@ export async function updateProfile(formData: FormData) {
       }
 
       const buffer = Buffer.from(await profilePhoto.arrayBuffer())
-      // Generate a unique filename using timestamp and sanitize original name
-      const ext = path.extname(profilePhoto.name) || '.jpg'
-      const filename = `${sessionUser.id}-${Date.now()}${ext}`
+      const filename = `${sessionUser.id}-${Date.now()}-${profilePhoto.name.replace(/[^a-zA-Z0-9.-]/g, '')}`
       
-      const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'profiles')
-      const filepath = path.join(uploadDir, filename)
+      const bucket = adminStorage.bucket()
+      const fileRef = bucket.file(`uploads/profiles/${filename}`)
       
-      await writeFile(filepath, buffer)
-      avatarUrl = `/uploads/profiles/${filename}`
+      await fileRef.save(buffer, {
+        metadata: {
+          contentType: profilePhoto.type || 'image/jpeg',
+        }
+      })
+      
+      await fileRef.makePublic()
+      
+      avatarUrl = `https://storage.googleapis.com/${bucket.name}/${fileRef.name}`
     }
 
     // Update the database
