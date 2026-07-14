@@ -78,7 +78,7 @@ export default async function Home() {
         <HomeProfileClient adminData={adminData} />
 
         {/* Feed Area */}
-        <ProfileFeed items={allItems} authorName={user.name} />
+        <ProfileFeed items={allItems} authorName={adminData.name} />
 
       </main>
 

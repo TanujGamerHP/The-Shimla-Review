@@ -39,7 +39,6 @@ export default function ProfileFeed({ items, authorName }: { items: ProfileFeedI
 
   return (
     <div className="flex flex-col">
-      <h2 className="text-2xl font-semibold mb-6">Uploads</h2>
       
       {/* Tabs */}
       <div className="flex flex-wrap items-center gap-3 mb-10 pb-4 border-b border-gray-100">
