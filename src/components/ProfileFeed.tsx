@@ -56,7 +56,7 @@ export default function ProfileFeed({ items, authorName }: { items: ProfileFeedI
                   : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
               }`}
             >
-              {tab === 'All' ? 'All' : `${count} ${tab === 'Poetry' || tab === 'The Simla Review' ? tab : tab + 's'}`}
+              {tab === 'All' ? 'All' : `${count} ${tab === 'Poetry' || tab === 'The Simla Review' ? tab : tab === 'Short Story' ? 'Short Stories' : tab + 's'}`}
             </button>
           )
         })}
@@ -64,7 +64,7 @@ export default function ProfileFeed({ items, authorName }: { items: ProfileFeedI
 
       <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h3 className="text-gray-500 text-sm font-medium tracking-wide uppercase">
-          {activeTab === 'All' ? 'Works' : activeTab === 'Poetry' || activeTab === 'The Simla Review' ? activeTab : `${activeTab}s`} by {authorName}
+          {activeTab === 'All' ? 'Works' : activeTab === 'Poetry' || activeTab === 'The Simla Review' ? activeTab : activeTab === 'Short Story' ? 'Short Stories' : `${activeTab}s`} by {authorName}
           <span className="text-gray-400 text-xs ml-2 normal-case">({sortedItems.length} items)</span>
         </h3>
         

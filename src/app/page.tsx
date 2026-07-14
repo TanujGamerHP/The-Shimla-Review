@@ -15,11 +15,12 @@ export default async function Home() {
   if (!user) return <div className="p-10">Database not seeded. Run seed script.</div>
 
   // Fetch all content types across the site
-  const [books, poems, researchPapers, articles] = await Promise.all([
+  const [books, poems, researchPapers, articles, journals] = await Promise.all([
     prisma.book.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.poem.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.researchPaper.findMany({ orderBy: { createdAt: 'desc' } }),
-    prisma.article.findMany({ orderBy: { createdAt: 'desc' } })
+    prisma.article.findMany({ orderBy: { createdAt: 'desc' } }),
+    prisma.journal.findMany({ orderBy: { createdAt: 'desc' } })
   ])
 
   const allItems: ProfileFeedItem[] = [
@@ -43,6 +44,11 @@ export default async function Home() {
       id: a.id, type: 'The Simla Review', title: a.title, subtitle: a.subtitle, abstract: a.content,
       institution: 'Editorial', views: a.views, thumbnailUrl: a.coverImageUrl,
       createdAt: a.createdAt, slug: a.slug, downloadUrl: null
+    })),
+    ...journals.map(j => ({
+      id: j.id, type: 'Short Story', title: j.title, subtitle: j.subtitle, abstract: `Volume ${j.volume}, Issue ${j.issue}\n\n${j.editorialBoard || ''}`,
+      institution: 'Short Story', views: j.views, thumbnailUrl: j.coverImageUrl,
+      createdAt: j.createdAt, slug: j.slug, downloadUrl: j.downloadUrl
     }))
   ].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
 
