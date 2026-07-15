@@ -101,7 +101,7 @@ export default function PaperItem({ paper }: PaperProps) {
             </div>
           )}
 
-          <div className="mt-auto flex items-center gap-4">
+          <div className="mt-auto flex flex-wrap items-center gap-4">
             <button 
               className="bg-accent hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-sm flex items-center justify-center gap-2"
             >
@@ -177,7 +177,7 @@ export default function PaperItem({ paper }: PaperProps) {
           </div>
         )}
 
-        <div className="mt-auto flex items-center gap-6">
+        <div className="mt-auto flex flex-wrap items-center gap-6">
           {paper.downloadUrl ? (
             <button 
               onClick={handleDownloadClick}

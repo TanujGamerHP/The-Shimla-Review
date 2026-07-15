@@ -18,10 +18,10 @@ export default function Navbar() {
 
   return (
     <nav className="border-b border-gray-100 bg-white sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 min-h-16 h-auto flex flex-col md:flex-row items-center justify-between py-3 md:py-0 gap-4 md:gap-0">
         
         {/* Left: Logo */}
-        <div className="flex items-center gap-8 shrink-0">
+        <div className="flex items-center gap-8 shrink-0 w-full md:w-auto justify-center md:justify-start">
           <Link href="/" className="flex items-center gap-3 group">
             <h1 className="text-3xl font-extrabold tracking-tight text-primary transition-transform group-hover:scale-105" style={{ fontFamily: 'var(--font-cormorant)', textShadow: '0 0 2px currentColor' }}>
               Sandeep Sharma
@@ -30,9 +30,9 @@ export default function Navbar() {
         </div>
 
         {/* Center/Right: Navigation Tabs & Profile */}
-        <div className="flex items-center gap-6 shrink-0 ml-auto overflow-x-auto">
+        <div className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-end gap-4 md:gap-6 shrink-0 w-full md:w-auto md:ml-auto">
           
-          <div className="flex items-center gap-4 text-sm font-medium">
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-sm font-medium w-full sm:w-auto">
             {navLinks.map((link) => (
               <Link 
                 key={link.name}
@@ -48,7 +48,7 @@ export default function Navbar() {
               href="https://theshimlareview.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="ml-4 whitespace-nowrap px-5 py-2 bg-[#185ADB] text-white rounded-md text-base font-bold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 tracking-wide"
+              className="whitespace-nowrap px-4 md:px-5 py-1.5 md:py-2 bg-[#185ADB] text-white rounded-md text-sm md:text-base font-bold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 tracking-wide mt-2 sm:mt-0"
             >
               The Simla Review
             </a>
@@ -56,8 +56,8 @@ export default function Navbar() {
 
           {user && (
             <>
-              <div className="h-6 w-px bg-gray-200 hidden sm:block mx-1"></div>
-              <div className="flex items-center gap-3 shrink-0">
+              <div className="h-6 w-px bg-gray-200 hidden md:block mx-1"></div>
+              <div className="flex items-center gap-3 shrink-0 absolute top-4 right-4 md:static">
                 {user.role === 'SUPER_ADMIN' && (
                   <span className="hidden sm:inline-block bg-primary text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide">
                     Super Admin
