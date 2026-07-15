@@ -76,13 +76,7 @@ export default function PaperItem({ paper }: PaperProps) {
             <div className="w-16 h-20 border-2 border-gray-200 rounded flex flex-col gap-2 p-2" />
           )}
         </div>
-
         <div className="flex flex-col justify-start">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-gray-600 border border-gray-200">
-              BOOK
-            </span>
-          </div>
           
           <h3 className="text-xl sm:text-2xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent">
             {paper.title}
@@ -159,12 +153,7 @@ export default function PaperItem({ paper }: PaperProps) {
         )}
       </div>
 
-      <div className="flex flex-col justify-start">
-        <div className="mb-2">
-          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-gray-600 border border-gray-200">
-            {paper.type}
-          </span>
-        </div>
+        <div className="flex flex-col justify-start">
         <h3 className="text-xl sm:text-2xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent">
           {paper.title}
         </h3>
