@@ -90,27 +90,14 @@ export default function PaperItem({ paper }: PaperProps) {
           </p>
           
           {paper.abstract && (
-            <div className="mb-6 max-w-2xl relative">
-              <p className={`text-gray-600 text-sm leading-relaxed whitespace-pre-wrap ${!isExpanded ? 'line-clamp-2 overflow-hidden' : ''}`}>
-                {renderTextWithLinks(paper.abstract)}
-              </p>
-              {!isExpanded ? (
-                <div className="absolute bottom-0 right-0 bg-gradient-to-l from-white via-white to-transparent pl-8 pt-0 flex items-center justify-end group-hover:from-white group-hover:via-white">
-                  <button 
-                    onClick={(e) => { e.preventDefault(); setIsExpanded(true); }}
-                    className="text-accent hover:underline font-bold text-sm ml-1 bg-white group-hover:bg-white"
-                  >
-                    ...more ▾
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  onClick={(e) => { e.preventDefault(); setIsExpanded(false); }}
-                  className="text-accent hover:underline font-bold text-sm mt-1 block"
-                >
-                  less ▴
-                </button>
-              )}
+            <div className="mb-6 max-w-2xl">
+              <div className="text-gray-600 text-sm leading-relaxed sm:columns-2 sm:gap-8">
+                {paper.abstract.split('\n').map((line, i) => (
+                  <p key={i} className="break-inside-avoid mb-1 min-h-[1.25rem]">
+                    {renderTextWithLinks(line)}
+                  </p>
+                ))}
+              </div>
             </div>
           )}
 
