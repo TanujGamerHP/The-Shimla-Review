@@ -116,18 +116,6 @@ export default function HomeProfilePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Followers</label>
-            <input 
-              type="text" 
-              name="followers" 
-              value={formData.followers} 
-              onChange={handleChange} 
-              className="w-full border border-gray-200 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all"
-              placeholder="e.g. 4337 or 4.3k"
-            />
-          </div>
-
-          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Public Views</label>
             <input 
               type="text" 

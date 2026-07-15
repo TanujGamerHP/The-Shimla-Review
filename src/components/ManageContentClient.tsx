@@ -3,23 +3,24 @@
 import { useState } from 'react'
 import { Trash2, ExternalLink, FileText, Loader2, Search, Edit } from 'lucide-react'
 import Link from 'next/link'
-import { deleteBook, deleteJournal, deleteResearchPaper, deletePoem, deleteArticle } from '@/actions/admin'
+import { deleteBook, deleteResearchPaper, deleteStudentNote } from '@/actions/admin'
 
 export type ManageContentItem = {
   id: string
-  type: 'Book' | 'Research Paper' | 'Poetry' | 'Short Story' | 'The Simla Review'
+  type: 'Book' | 'Research Paper' | 'Student Note'
   title: string
   views: number
+  downloads: number
   slug: string
   createdAt: Date
 }
 
 export default function ManageContentClient({ items }: { items: ManageContentItem[] }) {
-  const [activeTab, setActiveTab] = useState<'All' | 'Book' | 'Research Paper' | 'Poetry' | 'Short Story' | 'The Simla Review'>('All')
+  const [activeTab, setActiveTab] = useState<'All' | 'Book' | 'Research Paper' | 'Student Note'>('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [deletingId, setDeletingId] = useState<string | null>(null)
 
-  const tabs = ['All', 'Book', 'Research Paper', 'Poetry', 'Short Story', 'The Simla Review']
+  const tabs = ['All', 'Book', 'Research Paper', 'Student Note']
 
   const filteredItems = items.filter(item => {
     const matchesTab = activeTab === 'All' || item.type === activeTab
@@ -34,9 +35,7 @@ export default function ManageContentClient({ items }: { items: ManageContentIte
     try {
       if (type === 'Book') await deleteBook(id)
       else if (type === 'Research Paper') await deleteResearchPaper(id)
-      else if (type === 'Poetry') await deletePoem(id)
-      else if (type === 'Short Story') await deleteJournal(id)
-      else if (type === 'The Simla Review') await deleteArticle(id)
+      else if (type === 'Student Note') await deleteStudentNote(id)
     } catch (error) {
       alert('Failed to delete content.')
     } finally {
@@ -89,6 +88,7 @@ export default function ManageContentClient({ items }: { items: ManageContentIte
                   <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
                   <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
                   <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Views</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Downloaders</th>
                   <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
                   <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
                 </tr>
@@ -107,12 +107,15 @@ export default function ManageContentClient({ items }: { items: ManageContentIte
                     <td className="px-6 py-4 text-sm text-gray-500">
                       {item.views}
                     </td>
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {item.downloads}
+                    </td>
                     <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       {new Date(item.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right space-x-3 whitespace-nowrap">
                       <Link 
-                        href={`/work/${item.type.toLowerCase().replace(' ', '-').replace('the-simla-review', 'article')}/${item.slug}`} 
+                        href={`/work/${item.type.toLowerCase().replace(' ', '-')}/${item.slug}`} 
                         target="_blank"
                         className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
                         title="View on site"
@@ -120,7 +123,7 @@ export default function ManageContentClient({ items }: { items: ManageContentIte
                         <ExternalLink size={18} />
                       </Link>
                       <Link 
-                        href={`/admin/manage-content/edit/${item.type.toLowerCase().replace(' ', '-').replace('the-simla-review', 'article')}/${item.id}`} 
+                        href={`/admin/manage-content/edit/${item.type.toLowerCase().replace(' ', '-')}/${item.id}`} 
                         className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-colors"
                         title="Edit"
                       >

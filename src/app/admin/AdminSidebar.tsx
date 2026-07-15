@@ -50,12 +50,9 @@ export default function AdminSidebar({ user }: { user: any }) {
 
         <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
           {[
-            { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
             { href: '/admin/home-profile', icon: Settings, label: 'Home Profile' },
-            { href: '/admin/content', icon: Library, label: 'Content Manager' },
+            { href: '/admin/content', icon: Library, label: 'Upload Content' },
             { href: '/admin/manage-content', icon: FileText, label: 'Manage Content' },
-            { href: '/admin/submissions', icon: FileCheck, label: 'Submissions' },
-            { href: '/admin/users', icon: Users, label: 'User Management' },
           ].map((item) => (
             <Link 
               key={item.href}

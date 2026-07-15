@@ -24,14 +24,7 @@ export async function incrementView(paperId: string) {
 
     if (!updated) {
       try {
-        await prisma.poem.update({ where: { id: paperId }, data: { views: { increment: 1 } } })
-        updated = true
-      } catch (e) {}
-    }
-
-    if (!updated) {
-      try {
-        await prisma.journal.update({ where: { id: paperId }, data: { views: { increment: 1 } } })
+        await prisma.studentNote.update({ where: { id: paperId }, data: { views: { increment: 1 } } })
         updated = true
       } catch (e) {}
     }

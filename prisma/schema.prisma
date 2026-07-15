@@ -24,41 +24,16 @@ model User {
   updatedAt    DateTime @updatedAt
 
   // Relations
-  articles       Article[]
   books          Book[]
-  poems          Poem[]
   researchPapers ResearchPaper[]
+  studentNotes   StudentNote[]
   comments       Comment[]
   bookmarks      Bookmark[]
   readingHistory ReadingHistory[]
-  submissions    Submission[]
   notifications  Notification[]
 }
 
 // Content Modules
-model Article {
-  id            String    @id @default(cuid())
-  title         String
-  subtitle      String?
-  slug          String    @unique
-  content       String // Rich Text / Markdown
-  coverImageUrl String?
-  readingTime   Int?
-  views         Int       @default(0)
-  status        String    @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED
-  publishedAt   DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  authorId   String
-  author     User       @relation(fields: [authorId], references: [id])
-  categoryId String?
-  category   Category?  @relation(fields: [categoryId], references: [id])
-  tags       Tag[]
-  comments   Comment[]
-  bookmarks  Bookmark[]
-}
-
 model Book {
   id              String    @id @default(cuid())
   title           String
@@ -74,31 +49,10 @@ model Book {
   downloadUrl     String?
   price           Float?
   views           Int       @default(0)
+  downloads       Int       @default(0)
   status          String    @default("DRAFT")
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-
-  authorId   String
-  author     User       @relation(fields: [authorId], references: [id])
-  categoryId String?
-  category   Category?  @relation(fields: [categoryId], references: [id])
-  bookmarks  Bookmark[]
-}
-
-model Poem {
-  id        String   @id @default(cuid())
-  title     String
-  subtitle  String?
-  content   String
-  slug      String   @unique
-  language      String?
-  audioUrl      String?
-  coverImageUrl String?
-  downloadUrl   String?
-  views         Int      @default(0)
-  status        String   @default("DRAFT")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
 
   authorId   String
   author     User       @relation(fields: [authorId], references: [id])
@@ -118,6 +72,7 @@ model ResearchPaper {
   downloadUrl   String?
   previewUrl    String?
   views         Int      @default(0)
+  downloads     Int      @default(0)
   status        String   @default("DRAFT")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -129,22 +84,26 @@ model ResearchPaper {
   bookmarks  Bookmark[]
 }
 
-model Journal {
-  id              String    @id @default(cuid())
-  title           String
-  subtitle        String?
-  volume          String?
-  issue           String?
-  slug            String    @unique
-  coverImageUrl   String?
-  editorialBoard  String?
-  downloadUrl     String?
-  publicationDate DateTime?
-  price           Float?
-  views           Int       @default(0)
-  status          String    @default("DRAFT")
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+model StudentNote {
+  id            String   @id @default(cuid())
+  title         String
+  subtitle      String?
+  description   String?
+  slug          String   @unique
+  subject       String?
+  coverImageUrl String?
+  downloadUrl   String?
+  views         Int      @default(0)
+  downloads     Int      @default(0)
+  status        String   @default("DRAFT")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  authorId   String
+  author     User       @relation(fields: [authorId], references: [id])
+  categoryId String?
+  category   Category?  @relation(fields: [categoryId], references: [id])
+  bookmarks  Bookmark[]
 }
 
 // Taxonomy
@@ -153,53 +112,15 @@ model Category {
   name           String          @unique
   slug           String          @unique
   description    String?
-  articles       Article[]
   books          Book[]
-  poems          Poem[]
   researchPapers ResearchPaper[]
+  studentNotes   StudentNote[]
 }
 
 model Tag {
   id       String    @id @default(cuid())
   name     String    @unique
   slug     String    @unique
-  articles Article[]
-}
-
-// Submissions (Work in progress)
-model Submission {
-  id                String   @id @default(cuid())
-  trackingId        String   @unique
-  fullName          String
-  authorBio         String?
-  email             String
-  phone             String?
-  country           String?
-  city              String?
-  profilePhotoUrl   String?
-  socialLinks       String?
-  website           String?
-  submissionType    String
-  category          String?
-  language          String?
-  title             String
-  subtitle          String?
-  description       String?
-  keywords          String?
-  coverImageUrl     String?
-  documentUrl       String?
-  wordCount         Int?
-  readingTime       Int?
-  consentGiven      Boolean  @default(false)
-  copyrightDeclared Boolean  @default(false)
-  originalWork      Boolean  @default(false)
-  status            String   @default("PENDING") // PENDING, UNDER_REVIEW, APPROVED, REJECTED, NEEDS_REVISION
-  internalNotes     String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id])
 }
 
 // Engagement & Community
@@ -211,8 +132,6 @@ model Comment {
 
   authorId  String
   author    User     @relation(fields: [authorId], references: [id])
-  articleId String?
-  article   Article? @relation(fields: [articleId], references: [id])
 }
 
 model Bookmark {
@@ -222,20 +141,18 @@ model Bookmark {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  articleId       String?
-  article         Article?       @relation(fields: [articleId], references: [id])
   bookId          String?
   book            Book?          @relation(fields: [bookId], references: [id])
-  poemId          String?
-  poem            Poem?          @relation(fields: [poemId], references: [id])
   researchPaperId String?
   researchPaper   ResearchPaper? @relation(fields: [researchPaperId], references: [id])
+  studentNoteId   String?
+  studentNote     StudentNote?   @relation(fields: [studentNoteId], references: [id])
 }
 
 model ReadingHistory {
   id          String   @id @default(cuid())
   contentId   String
-  contentType String // ARTICLE, BOOK, POEM, RESEARCH
+  contentType String // BOOK, RESEARCH, STUDENT_NOTE
   lastReadAt  DateTime @default(now())
 
   userId String

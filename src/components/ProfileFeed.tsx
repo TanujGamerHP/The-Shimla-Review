@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import PaperItem from '@/components/PaperItem'
+import { useState } from 'react'
 
 export type ProfileFeedItem = {
   id: string
@@ -11,6 +12,7 @@ export type ProfileFeedItem = {
   abstract: string | null
   institution: string | null
   views: number
+  downloads?: number
   thumbnailUrl: string | null
   createdAt: Date
   slug: string
@@ -20,16 +22,11 @@ export type ProfileFeedItem = {
 }
 
 export default function ProfileFeed({ items, authorName }: { items: ProfileFeedItem[], authorName: string }) {
-  const [activeTab, setActiveTab] = useState('All')
+  const searchParams = useSearchParams()
+  const activeTab = searchParams.get('tab') || 'Book'
   const [sortBy, setSortBy] = useState('views') // 'views', 'newest', 'oldest'
 
-  // Get unique types
-  const types = Array.from(new Set(items.map(item => item.type)))
-  const tabs = ['All', ...types]
-
-  const filteredItems = activeTab === 'All' 
-    ? items 
-    : items.filter(item => item.type === activeTab)
+  const filteredItems = items.filter(item => item.type === activeTab)
 
   const sortedItems = [...filteredItems].sort((a, b) => {
     if (sortBy === 'views') return b.views - a.views
@@ -40,31 +37,9 @@ export default function ProfileFeed({ items, authorName }: { items: ProfileFeedI
 
   return (
     <div className="flex flex-col">
-      
-      {/* Tabs */}
-      <div className="flex flex-wrap items-center gap-3 mb-10 pb-4 border-b border-gray-100">
-        {tabs.map(tab => {
-          const isActive = tab === activeTab
-          const count = tab === 'All' ? items.length : items.filter(i => i.type === tab).length
-          return (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
-                isActive 
-                  ? 'bg-blue-50 text-blue-700 border-blue-100' 
-                  : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
-              }`}
-            >
-              {tab === 'All' ? 'All' : `${count} ${tab === 'Poetry' || tab === 'The Simla Review' ? tab : tab === 'Short Story' ? 'Short Stories' : tab + 's'}`}
-            </button>
-          )
-        })}
-      </div>
-
       <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h3 className="text-gray-500 text-sm font-medium tracking-wide uppercase">
-          {activeTab === 'All' ? 'Works' : activeTab === 'Poetry' || activeTab === 'The Simla Review' ? activeTab : activeTab === 'Short Story' ? 'Short Stories' : `${activeTab}s`} by {authorName}
+          {activeTab}s by {authorName}
           <span className="text-gray-400 text-xs ml-2 normal-case">({sortedItems.length} items)</span>
         </h3>
         
@@ -85,7 +60,7 @@ export default function ProfileFeed({ items, authorName }: { items: ProfileFeedI
       {/* Item List */}
       <div className="flex flex-col">
         {sortedItems.length === 0 ? (
-          <p className="text-gray-500 py-8">No uploads in this category.</p>
+          <p className="text-gray-500 py-8">No uploads in this category yet.</p>
         ) : (
           sortedItems.map((item) => (
             <PaperItem key={`${item.type}-${item.id}`} paper={item} />

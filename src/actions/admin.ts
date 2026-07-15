@@ -71,46 +71,6 @@ export async function createBook(formData: FormData) {
   }
 }
 
-export async function createJournal(formData: FormData) {
-  try {
-    await requireSuperAdmin()
-    
-    const title = formData.get('title') as string
-    const subtitle = formData.get('subtitle') as string
-    const volume = formData.get('volume') as string
-    const issue = formData.get('issue') as string
-    const editorialBoard = formData.get('editorialBoard') as string
-    
-    const imageFile = formData.get('coverImage') as File
-    const pdfFile = formData.get('pdfDocument') as File
-    
-    const coverImageUrl = await uploadFile(imageFile, 'journals', 'journal-cover')
-    const downloadUrl = await uploadFile(pdfFile, 'pdfs', 'journal-doc')
-
-    const slug = `${title}-${volume}-${issue}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + `-${Math.random().toString(36).substring(2, 8)}`
-
-    await prisma.journal.create({
-      data: {
-        title,
-        subtitle,
-        volume,
-        issue,
-        editorialBoard,
-        slug,
-        coverImageUrl,
-        downloadUrl,
-        status: 'PUBLISHED'
-      }
-    })
-
-    revalidatePath('/')
-    revalidatePath('/admin/content')
-    return { success: true }
-  } catch (error: any) {
-    return { error: error.message || 'Failed to create journal' }
-  }
-}
-
 export async function createResearchPaper(formData: FormData) {
   try {
     const admin = await requireSuperAdmin()
@@ -150,29 +110,29 @@ export async function createResearchPaper(formData: FormData) {
   }
 }
 
-export async function createPoem(formData: FormData) {
+export async function createStudentNote(formData: FormData) {
   try {
     const admin = await requireSuperAdmin()
     
     const title = formData.get('title') as string
     const subtitle = formData.get('subtitle') as string
-    const content = formData.get('content') as string
-    const language = formData.get('language') as string
+    const description = formData.get('description') as string
+    const subject = formData.get('subject') as string
     
     const imageFile = formData.get('coverImage') as File
     const pdfFile = formData.get('pdfDocument') as File
     
-    const coverImageUrl = await uploadFile(imageFile, 'poetry', 'poem-cover')
-    const downloadUrl = await uploadFile(pdfFile, 'pdfs', 'poem-doc')
+    const coverImageUrl = await uploadFile(imageFile, 'student-notes', 'note-cover')
+    const downloadUrl = await uploadFile(pdfFile, 'pdfs', 'note-doc')
 
     const slug = `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}-${Math.random().toString(36).substring(2, 8)}`
 
-    await prisma.poem.create({
+    await prisma.studentNote.create({
       data: {
         title,
         subtitle,
-        content,
-        language,
+        description,
+        subject,
         slug,
         coverImageUrl,
         downloadUrl,
@@ -185,58 +145,7 @@ export async function createPoem(formData: FormData) {
     revalidatePath('/admin/content')
     return { success: true }
   } catch (error: any) {
-    return { error: error.message || 'Failed to create poem' }
-  }
-}
-
-export async function createArticle(formData: FormData) {
-  try {
-    const admin = await requireSuperAdmin()
-    
-    const title = formData.get('title') as string
-    const subtitle = formData.get('subtitle') as string
-    const content = formData.get('content') as string
-    
-    const imageFile = formData.get('coverImage') as File
-    
-    const coverImageUrl = await uploadFile(imageFile, 'articles', 'article-cover')
-
-    const slug = `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}-${Math.random().toString(36).substring(2, 8)}`
-
-    await prisma.article.create({
-      data: {
-        title,
-        subtitle,
-        content,
-        slug,
-        coverImageUrl,
-        authorId: admin.id,
-        status: 'PUBLISHED'
-      }
-    })
-
-    revalidatePath('/')
-    revalidatePath('/admin/content')
-    return { success: true }
-  } catch (error: any) {
-    return { error: error.message || 'Failed to create article' }
-  }
-}
-
-export async function updateSubmissionStatus(submissionId: string, status: string) {
-  try {
-    await requireSuperAdmin()
-    
-    await prisma.submission.update({
-      where: { id: submissionId },
-      data: { status }
-    })
-
-    revalidatePath('/admin/submissions')
-    return { success: true }
-  } catch (error: any) {
-    console.error('Failed to update submission:', error)
-    return { error: error.message || 'Failed to update submission' }
+    return { error: error.message || 'Failed to create student note' }
   }
 }
 
@@ -252,18 +161,6 @@ export async function deleteBook(id: string) {
   }
 }
 
-export async function deleteJournal(id: string) {
-  try {
-    await requireSuperAdmin()
-    await prisma.journal.delete({ where: { id } })
-    revalidatePath('/')
-    revalidatePath('/admin/manage-content')
-    return { success: true }
-  } catch (error: any) {
-    return { error: error.message || 'Failed to delete short story' }
-  }
-}
-
 export async function deleteResearchPaper(id: string) {
   try {
     await requireSuperAdmin()
@@ -276,27 +173,15 @@ export async function deleteResearchPaper(id: string) {
   }
 }
 
-export async function deletePoem(id: string) {
+export async function deleteStudentNote(id: string) {
   try {
     await requireSuperAdmin()
-    await prisma.poem.delete({ where: { id } })
+    await prisma.studentNote.delete({ where: { id } })
     revalidatePath('/')
     revalidatePath('/admin/manage-content')
     return { success: true }
   } catch (error: any) {
-    return { error: error.message || 'Failed to delete poem' }
-  }
-}
-
-export async function deleteArticle(id: string) {
-  try {
-    await requireSuperAdmin()
-    await prisma.article.delete({ where: { id } })
-    revalidatePath('/')
-    revalidatePath('/admin/manage-content')
-    return { success: true }
-  } catch (error: any) {
-    return { error: error.message || 'Failed to delete article' }
+    return { error: error.message || 'Failed to delete student note' }
   }
 }
 
@@ -332,37 +217,6 @@ export async function updateBook(id: string, formData: FormData) {
   }
 }
 
-export async function updateJournal(id: string, formData: FormData) {
-  try {
-    await requireSuperAdmin()
-    
-    const title = formData.get('title') as string
-    const subtitle = formData.get('subtitle') as string
-    const volume = formData.get('volume') as string
-    const issue = formData.get('issue') as string
-    const editorialBoard = formData.get('editorialBoard') as string
-    
-    const imageFile = formData.get('coverImage') as File | null
-    const pdfFile = formData.get('pdfDocument') as File | null
-    
-    const data: any = { title, subtitle, volume, issue, editorialBoard }
-    
-    if (imageFile && imageFile.size > 0) {
-      data.coverImageUrl = await uploadFile(imageFile, 'journals', 'journal-cover')
-    }
-    if (pdfFile && pdfFile.size > 0) {
-      data.downloadUrl = await uploadFile(pdfFile, 'pdfs', 'journal-doc')
-    }
-
-    await prisma.journal.update({ where: { id }, data })
-    revalidatePath('/')
-    revalidatePath('/admin/manage-content')
-    return { success: true }
-  } catch (error: any) {
-    return { error: error.message || 'Failed to update short story' }
-  }
-}
-
 export async function updateResearchPaper(id: string, formData: FormData) {
   try {
     await requireSuperAdmin()
@@ -393,105 +247,57 @@ export async function updateResearchPaper(id: string, formData: FormData) {
   }
 }
 
-export async function updatePoem(id: string, formData: FormData) {
+export async function updateStudentNote(id: string, formData: FormData) {
   try {
     await requireSuperAdmin()
     
     const title = formData.get('title') as string
     const subtitle = formData.get('subtitle') as string
-    const content = formData.get('content') as string
-    const language = formData.get('language') as string
+    const description = formData.get('description') as string
+    const subject = formData.get('subject') as string
     
     const imageFile = formData.get('coverImage') as File | null
     const pdfFile = formData.get('pdfDocument') as File | null
     
-    const data: any = { title, subtitle, content, language }
+    const data: any = { title, subtitle, description, subject }
     
     if (imageFile && imageFile.size > 0) {
-      data.coverImageUrl = await uploadFile(imageFile, 'poetry', 'poem-cover')
+      data.coverImageUrl = await uploadFile(imageFile, 'student-notes', 'note-cover')
     }
     if (pdfFile && pdfFile.size > 0) {
-      data.downloadUrl = await uploadFile(pdfFile, 'pdfs', 'poem-doc')
+      data.downloadUrl = await uploadFile(pdfFile, 'pdfs', 'note-doc')
     }
 
-    await prisma.poem.update({ where: { id }, data })
+    await prisma.studentNote.update({ where: { id }, data })
     revalidatePath('/')
     revalidatePath('/admin/manage-content')
     return { success: true }
   } catch (error: any) {
-    return { error: error.message || 'Failed to update poem' }
+    return { error: error.message || 'Failed to update student note' }
   }
 }
 
-export async function updateArticle(id: string, formData: FormData) {
+export async function incrementDownloads(id: string, type: 'book' | 'paper' | 'studentNote') {
   try {
-    await requireSuperAdmin()
-    
-    const title = formData.get('title') as string
-    const subtitle = formData.get('subtitle') as string
-    const content = formData.get('content') as string
-    
-    const imageFile = formData.get('coverImage') as File | null
-    
-    const data: any = { title, subtitle, content }
-    
-    if (imageFile && imageFile.size > 0) {
-      data.coverImageUrl = await uploadFile(imageFile, 'articles', 'article-cover')
+    if (type === 'book') {
+      await prisma.book.update({
+        where: { id },
+        data: { downloads: { increment: 1 } }
+      })
+    } else if (type === 'paper') {
+      await prisma.researchPaper.update({
+        where: { id },
+        data: { downloads: { increment: 1 } }
+      })
+    } else if (type === 'studentNote') {
+      await prisma.studentNote.update({
+        where: { id },
+        data: { downloads: { increment: 1 } }
+      })
     }
-
-    await prisma.article.update({ where: { id }, data })
-    revalidatePath('/')
-    revalidatePath('/admin/manage-content')
     return { success: true }
   } catch (error: any) {
-    return { error: error.message || 'Failed to update article' }
-  }
-}
-
-// USER MANAGEMENT
-
-export async function deleteUser(userId: string) {
-  try {
-    const admin = await getSessionUser()
-    if (!admin || admin.role !== 'SUPER_ADMIN') {
-      return { error: 'Unauthorized' }
-    }
-
-    // Safety check: Prevent deleting SUPER_ADMIN
-    const targetUser = await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        articles: true,
-        books: true,
-        poems: true,
-        researchPapers: true
-      }
-    })
-
-    if (!targetUser) return { error: 'User not found' }
-    if (targetUser.role === 'SUPER_ADMIN') {
-      return { error: 'Action denied: Cannot delete a Super Admin.' }
-    }
-
-    // Check if user has published content
-    const hasContent = targetUser.articles.length > 0 || targetUser.books.length > 0 || targetUser.poems.length > 0 || targetUser.researchPapers.length > 0
-    if (hasContent) {
-      return { error: 'Cannot delete user: They have published content (Books, Articles, etc.). Please reassign or delete their content first.' }
-    }
-
-    // Cascade delete their personal data in a transaction
-    await prisma.$transaction([
-      prisma.bookmark.deleteMany({ where: { userId } }),
-      prisma.readingHistory.deleteMany({ where: { userId } }),
-      prisma.comment.deleteMany({ where: { authorId: userId } }),
-      prisma.notification.deleteMany({ where: { userId } }),
-      prisma.submission.deleteMany({ where: { userId } }),
-      prisma.user.delete({ where: { id: userId } })
-    ])
-
-    return { success: true }
-  } catch (error) {
-    console.error('Error deleting user:', error)
-    return { error: 'Internal server error while deleting user' }
+    console.error('Failed to increment downloads:', error)
+    return { error: 'Failed to track download' }
   }
 }

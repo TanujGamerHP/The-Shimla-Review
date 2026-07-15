@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { incrementView } from '@/app/actions/increment-view'
+import { incrementDownloads } from '@/actions/admin'
 import { Download, Eye } from 'lucide-react'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 
 import { ProfileFeedItem } from '@/components/ProfileFeed'
 
@@ -23,6 +23,11 @@ export default function PaperItem({ paper }: PaperProps) {
     
     setViews((prev) => prev + 1)
     await incrementView(paper.id)
+    
+    // Track download for admin counter
+    if (paper.type === 'Book') await incrementDownloads(paper.id, 'book')
+    else if (paper.type === 'Research Paper') await incrementDownloads(paper.id, 'paper')
+    else if (paper.type === 'Student Note') await incrementDownloads(paper.id, 'studentNote')
     
     if (paper.downloadUrl) {
       window.open(paper.downloadUrl, '_blank')
@@ -140,7 +145,7 @@ export default function PaperItem({ paper }: PaperProps) {
       transition={{ duration: 0.4 }}
       className="flex flex-col sm:flex-row gap-6 py-8 border-b border-gray-100 last:border-0 group transition-all duration-500 ease-out hover:bg-white hover:shadow-premium hover:-translate-y-1 hover:rounded-2xl p-4 sm:p-6 -mx-4 sm:-mx-6"
     >
-      <Link href={`/work/${paper.type.toLowerCase().replace(' ', '-')}/${paper.slug}`} className="w-full sm:w-32 h-64 sm:h-44 flex-shrink-0 bg-gray-50 border border-gray-200 rounded-lg overflow-hidden flex items-center justify-center text-gray-300 group-hover:shadow-premium-hover transition-all duration-500">
+      <div className="w-full sm:w-32 h-64 sm:h-44 flex-shrink-0 bg-gray-50 border border-gray-200 rounded-lg overflow-hidden flex items-center justify-center text-gray-300 group-hover:shadow-premium-hover transition-all duration-500">
         {paper.thumbnailUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={paper.thumbnailUrl} alt={paper.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -152,7 +157,7 @@ export default function PaperItem({ paper }: PaperProps) {
             <div className="h-1 bg-gray-200 rounded w-2/3"></div>
           </div>
         )}
-      </Link>
+      </div>
 
       <div className="flex flex-col justify-start">
         <div className="mb-2">
@@ -160,11 +165,9 @@ export default function PaperItem({ paper }: PaperProps) {
             {paper.type}
           </span>
         </div>
-        <Link href={`/work/${paper.type.toLowerCase().replace(' ', '-')}/${paper.slug}`}>
-          <h3 className="text-xl sm:text-2xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent cursor-pointer">
-            {paper.title}
-          </h3>
-        </Link>
+        <h3 className="text-xl sm:text-2xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent">
+          {paper.title}
+        </h3>
         {paper.subtitle && (
           <p className="text-md text-gray-600 mb-2 font-medium">{paper.subtitle}</p>
         )}

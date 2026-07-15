@@ -2,19 +2,18 @@
 
 import Link from 'next/link'
 import { useAuth } from '@/context/AuthContext'
-import { usePathname } from 'next/navigation'
-import { BookOpen, Feather, GraduationCap, LayoutDashboard, LogOut, User } from 'lucide-react'
+import { usePathname, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
-import SearchBox from '@/components/SearchBox'
 
 export default function Navbar() {
-  const { user, logout } = useAuth()
-  const pathname = usePathname()
+  const { user } = useAuth()
+  const searchParams = useSearchParams()
+  const currentTab = searchParams.get('tab') || 'Book'
 
   const navLinks = [
-    { name: 'Books', href: '/books', icon: BookOpen },
-    { name: 'Poetry', href: '/poetry', icon: Feather },
-    { name: 'Research', href: '/research', icon: GraduationCap },
+    { name: 'Books', tabValue: 'Book' },
+    { name: 'Research Papers', tabValue: 'Research Paper' },
+    { name: 'Student Notes', tabValue: 'Student Note' },
   ]
 
   return (
@@ -25,28 +24,39 @@ export default function Navbar() {
         <div className="flex items-center gap-8 shrink-0">
           <Link href="/" className="flex items-center gap-3 group">
             <h1 className="text-2xl font-bold tracking-tight text-primary transition-transform group-hover:scale-105" style={{ fontFamily: 'var(--font-cormorant)', textShadow: '0 0 1px currentColor' }}>
-              Prof. Sandeep Sharma
+              Sandeep Sharma
             </h1>
           </Link>
         </div>
 
-        {/* Center: Search */}
-        <div className="flex-1 flex justify-center px-4">
-          <SearchBox />
-        </div>
-
-        {/* Right: Actions */}
-        <div className="flex items-center gap-4 shrink-0">
+        {/* Center/Right: Navigation Tabs & Profile */}
+        <div className="flex items-center gap-6 shrink-0 ml-auto overflow-x-auto">
           
-          <Link href="/submit" className="hidden sm:block text-gray-600 hover:text-primary font-medium text-sm px-3 py-2 transition-colors">
-            Submit Poetry
-          </Link>
+          <div className="flex items-center gap-4 text-sm font-medium">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name}
+                href={`/?tab=${link.tabValue}`} 
+                className={`transition-colors whitespace-nowrap px-2 py-1 border-b-2 ${currentTab === link.tabValue ? 'border-accent text-accent' : 'border-transparent text-gray-600 hover:text-accent'}`}
+              >
+                {link.name}
+              </Link>
+            ))}
+            
+            <a 
+              href="https://theshimlareview.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="transition-colors whitespace-nowrap px-2 py-1 text-gray-600 hover:text-accent border-b-2 border-transparent"
+            >
+              The Simla Review
+            </a>
+          </div>
 
-          <div className="h-6 w-px bg-gray-200 hidden sm:block mx-1"></div>
-
-          <div className="flex items-center gap-3">
-            {user ? (
-              <div className="flex items-center gap-3">
+          {user && (
+            <>
+              <div className="h-6 w-px bg-gray-200 hidden sm:block mx-1"></div>
+              <div className="flex items-center gap-3 shrink-0">
                 {user.role === 'SUPER_ADMIN' && (
                   <span className="hidden sm:inline-block bg-primary text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide">
                     Super Admin
@@ -63,23 +73,8 @@ export default function Navbar() {
                   </div>
                 </Link>
               </div>
-            ) : (
-              <>
-                <Link 
-                  href="/auth/login" 
-                  className="text-gray-600 hover:text-accent font-medium text-xs sm:text-sm px-2 sm:px-4 py-2 transition-all"
-                >
-                  Log In
-                </Link>
-                <Link 
-                  href="/auth/signup" 
-                  className="bg-accent hover:bg-blue-700 text-white font-medium text-xs sm:text-sm px-4 sm:px-5 py-1.5 sm:py-2 rounded-full shadow-sm transition-all hover:shadow hover:scale-105"
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </div>
     </nav>

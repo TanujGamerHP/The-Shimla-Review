@@ -11,12 +11,10 @@ export default async function EditContentPage({ params }: { params: Promise<{ ty
 
   if (type === 'book') {
     itemData = await prisma.book.findUnique({ where: { id } })
-  } else if (type === 'short-story') {
-    itemData = await prisma.journal.findUnique({ where: { id } })
+  } else if (type === 'student-note') {
+    itemData = await prisma.studentNote.findUnique({ where: { id } })
   } else if (type === 'research-paper') {
     itemData = await prisma.researchPaper.findUnique({ where: { id } })
-  } else if (type === 'poetry') {
-    itemData = await prisma.poem.findUnique({ where: { id } })
   }
 
   if (!itemData) {

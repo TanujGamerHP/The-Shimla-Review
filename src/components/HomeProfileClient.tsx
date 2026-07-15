@@ -61,10 +61,7 @@ export default function HomeProfileClient({ adminData }: { adminData: AdminData 
         </button>
 
         <div className="flex flex-col w-full text-[13px] mb-6">
-          <div className="flex items-center justify-between py-1.5">
-            <span className="text-gray-800">Followers</span>
-            <span className="text-[#185ADB] font-medium hover:underline cursor-pointer">{followers}</span>
-          </div>
+
           <div className="flex items-center justify-between py-1.5">
             <span className="text-gray-800">Public Views</span>
             <span className="text-[#185ADB] font-medium hover:underline cursor-pointer">
@@ -78,38 +75,28 @@ export default function HomeProfileClient({ adminData }: { adminData: AdminData 
 
 
 
-        {/* Interests */}
-        <div className="w-full mb-8">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-[13px] font-medium text-gray-800">Interests</h3>
-            <span className="text-[11px] text-gray-500 cursor-pointer hover:underline">View All (33)</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {['Semiotics', 'Education', 'Social Sciences', 'English Literature', 'Philosophy of Mind'].map(tag => (
-              <span key={tag} className="px-3 py-1 border border-gray-300 rounded-full text-[12px] text-gray-600 hover:bg-gray-50 cursor-pointer transition-colors">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
         {/* Social Links */}
-        <div className="w-full flex items-center gap-5 text-[#185ADB]">
-          <Link href="/cv" className="text-[15px] font-bold cursor-pointer hover:underline tracking-wide">CV</Link>
+        <div className="w-full flex items-center justify-start gap-6 pt-4 border-t border-gray-100">
+          <Link href="/cv" className="flex items-center justify-center w-10 h-10 rounded-full bg-[#185ADB] hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all hover:scale-105 hover:shadow-lg">
+            CV
+          </Link>
           
           <div className="relative flex items-center group">
-            <a href="mailto:profsandeepsharma@gmail.com" className="flex items-center">
-              <Mail size={18} className="cursor-pointer text-gray-600 group-hover:text-[#185ADB] transition-colors" />
+            <a href="mailto:profsandeepsharma@gmail.com" className="flex items-center justify-center w-10 h-10 rounded-full bg-red-500 hover:bg-red-600 text-white shadow-md transition-all hover:scale-105 hover:shadow-lg">
+              <Mail size={20} strokeWidth={2.5} />
             </a>
             {/* Tooltip */}
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-10 pointer-events-none shadow-lg">
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs font-medium rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-10 pointer-events-none shadow-xl">
               profsandeepsharma@gmail.com
               <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-4 border-transparent border-t-gray-900"></div>
             </div>
           </div>
-          <svg className="w-4 h-4 cursor-pointer text-gray-600 hover:text-gray-900" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-          </svg>
+
+          <a href="#" className="flex items-center justify-center w-10 h-10 rounded-full bg-[#1877F2] hover:bg-[#166fe5] text-white shadow-md transition-all hover:scale-105 hover:shadow-lg">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+            </svg>
+          </a>
         </div>
 
       </div>

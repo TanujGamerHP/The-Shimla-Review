@@ -6,12 +6,10 @@ const prisma = new PrismaClient()
 
 export default async function ManageContentPage() {
   // Fetch all content concurrently
-  const [books, papers, poems, journals, articles] = await Promise.all([
+  const [books, papers, studentNotes] = await Promise.all([
     prisma.book.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.researchPaper.findMany({ orderBy: { createdAt: 'desc' } }),
-    prisma.poem.findMany({ orderBy: { createdAt: 'desc' } }),
-    prisma.journal.findMany({ orderBy: { createdAt: 'desc' } }),
-    prisma.article.findMany({ orderBy: { createdAt: 'desc' } })
+    prisma.studentNote.findMany({ orderBy: { createdAt: 'desc' } }),
   ])
 
   // Map into unified array
@@ -21,6 +19,7 @@ export default async function ManageContentPage() {
       type: 'Book' as const,
       title: b.title,
       views: b.views,
+      downloads: b.downloads,
       slug: b.slug,
       createdAt: b.createdAt
     })),
@@ -29,32 +28,18 @@ export default async function ManageContentPage() {
       type: 'Research Paper' as const,
       title: p.title,
       views: p.views,
+      downloads: p.downloads,
       slug: p.slug,
       createdAt: p.createdAt
     })),
-    ...poems.map(p => ({
-      id: p.id,
-      type: 'Poetry' as const,
-      title: p.title,
-      views: p.views,
-      slug: p.slug,
-      createdAt: p.createdAt
-    })),
-    ...journals.map(j => ({
-      id: j.id,
-      type: 'Short Story' as const,
-      title: j.title,
-      views: j.views,
-      slug: j.slug,
-      createdAt: j.createdAt
-    })),
-    ...articles.map(a => ({
-      id: a.id,
-      type: 'The Simla Review' as const,
-      title: a.title,
-      views: a.views,
-      slug: a.slug,
-      createdAt: a.createdAt
+    ...studentNotes.map(sn => ({
+      id: sn.id,
+      type: 'Student Note' as const,
+      title: sn.title,
+      views: sn.views,
+      downloads: sn.downloads,
+      slug: sn.slug,
+      createdAt: sn.createdAt
     }))
   ]
 
@@ -65,7 +50,7 @@ export default async function ManageContentPage() {
     <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Manage Published Content</h1>
-        <p className="text-gray-500 mt-1">View all published books, research papers, poetry, short stories, and articles across the site. You can edit or delete items here.</p>
+        <p className="text-gray-500 mt-1">View all published books, research papers, and student notes across the site. You can edit or delete items here.</p>
       </div>
 
       <ManageContentClient items={allContent} />

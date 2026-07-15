@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { createBook, createJournal, createResearchPaper, createPoem, createArticle } from '@/actions/admin'
+import { createBook, createResearchPaper, createStudentNote } from '@/actions/admin'
 import { BookPlus, CheckCircle2, Loader2, Image as ImageIcon, FileText } from 'lucide-react'
 
 export default function ContentManager() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{type: 'success' | 'error', text: string} | null>(null)
-  const [activeTab, setActiveTab] = useState<'book' | 'paper' | 'poem' | 'journal' | 'article'>('book')
+  const [activeTab, setActiveTab] = useState<'book' | 'paper' | 'studentNote'>('book')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -20,9 +20,7 @@ export default function ContentManager() {
     let result;
     if (activeTab === 'book') result = await createBook(formData)
     else if (activeTab === 'paper') result = await createResearchPaper(formData)
-    else if (activeTab === 'poem') result = await createPoem(formData)
-    else if (activeTab === 'journal') result = await createJournal(formData)
-    else if (activeTab === 'article') result = await createArticle(formData)
+    else if (activeTab === 'studentNote') result = await createStudentNote(formData)
     
     if (result?.error) {
       setMessage({ type: 'error', text: result.error })
@@ -60,12 +58,12 @@ export default function ContentManager() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Content Manager</h1>
-        <p className="text-gray-500 mt-1">Directly publish books, papers, poetry, short stories, and the simla review.</p>
+        <h1 className="text-3xl font-bold text-gray-900">Upload Content</h1>
+        <p className="text-gray-500 mt-1">Directly publish books, research papers, and student notes.</p>
       </div>
 
       <div className="flex gap-4 border-b border-gray-200 pb-4 overflow-x-auto">
-        {['book', 'paper', 'poem', 'journal', 'article'].map((tab) => (
+        {['book', 'paper', 'studentNote'].map((tab) => (
           <button 
             key={tab}
             onClick={() => setActiveTab(tab as any)}
@@ -77,9 +75,7 @@ export default function ContentManager() {
           >
             {tab === 'book' && 'Publish Book'}
             {tab === 'paper' && 'Publish Paper'}
-            {tab === 'poem' && 'Publish Poem'}
-            {tab === 'journal' && 'Publish Short Story'}
-            {tab === 'article' && 'Publish The Simla Review'}
+            {tab === 'studentNote' && 'Publish Student Note'}
           </button>
         ))}
       </div>
@@ -123,8 +119,6 @@ export default function ContentManager() {
           </>
         )}
 
-
-
         {activeTab === 'paper' && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -148,63 +142,25 @@ export default function ContentManager() {
           </>
         )}
 
-        {activeTab === 'poem' && (
+        {activeTab === 'studentNote' && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Poem Title</label>
-                <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="Ode to the Pines" />
+                <label className="text-sm font-semibold text-gray-700">Student Note Title</label>
+                <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="English Literature Notes" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700">Subtitle</label>
-                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="A short poem" />
+                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="Chapter 1-3 Summary" />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">Language</label>
-              <input type="text" name="language" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="English, Hindi, etc." />
+              <label className="text-sm font-semibold text-gray-700">Subject / Category (Optional)</label>
+              <input type="text" name="subject" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="e.g. History, Literature" />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">Poem Content (Optional if uploading PDF)</label>
-              <textarea name="content" rows={6} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900 resize-none" placeholder="Write the poem here..." />
-            </div>
-          </>
-        )}
-
-        {activeTab === 'journal' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Short Story Title</label>
-                <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="The Midnight Train" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
-                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="A short story about..." />
-              </div>
-            </div>
-            <div className="space-y-2 mt-6">
-              <label className="text-sm font-semibold text-gray-700">Author / Volume (Optional)</label>
-              <input type="text" name="volume" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="e.g. Vol 2 or Author Name" />
-            </div>
-          </>
-        )}
-
-        {activeTab === 'article' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Article Title (The Simla Review)</label>
-                <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="Mountain Life in the 21st Century" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
-                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="An editorial perspective..." />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">Full Content</label>
-              <textarea name="content" required rows={6} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900 resize-none" placeholder="Write your full article here..." />
+              <label className="text-sm font-semibold text-gray-700">Description</label>
+              <textarea name="description" required rows={4} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900 resize-none" placeholder="A summary of what these notes cover..." />
             </div>
           </>
         )}

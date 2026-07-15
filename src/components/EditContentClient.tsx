@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { updateBook, updateJournal, updateResearchPaper, updatePoem } from '@/actions/admin'
+import { updateBook, updateResearchPaper, updateStudentNote } from '@/actions/admin'
 import { Save, CheckCircle2, Loader2, Image as ImageIcon, FileText, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -20,9 +20,8 @@ export default function EditContentClient({ type, data }: { type: string, data: 
     
     let result;
     if (type === 'book') result = await updateBook(data.id, formData)
-    else if (type === 'short-story') result = await updateJournal(data.id, formData)
     else if (type === 'research-paper') result = await updateResearchPaper(data.id, formData)
-    else if (type === 'poetry') result = await updatePoem(data.id, formData)
+    else if (type === 'student-note') result = await updateStudentNote(data.id, formData)
     
     if (result?.error) {
       setMessage({ type: 'error', text: result.error })
@@ -101,32 +100,6 @@ export default function EditContentClient({ type, data }: { type: string, data: 
           </>
         )}
 
-        {type === 'short-story' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Short Story Title</label>
-                <input type="text" name="title" required defaultValue={data.title} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
-                <input type="text" name="subtitle" defaultValue={data.subtitle} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
-              </div>
-            </div>
-            <div className="space-y-2 mt-6">
-              <label className="text-sm font-semibold text-gray-700">Volume & Issue</label>
-              <div className="flex gap-4">
-                <input type="text" name="volume" required defaultValue={data.volume} className="w-1/2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
-                <input type="text" name="issue" required defaultValue={data.issue} className="w-1/2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">Author/Contributor Notes</label>
-              <textarea name="editorialBoard" rows={3} defaultValue={data.editorialBoard} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900 resize-none" />
-            </div>
-          </>
-        )}
-
         {type === 'research-paper' && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -150,11 +123,11 @@ export default function EditContentClient({ type, data }: { type: string, data: 
           </>
         )}
 
-        {type === 'poetry' && (
+        {type === 'student-note' && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Poem Title</label>
+                <label className="text-sm font-semibold text-gray-700">Student Note Title</label>
                 <input type="text" name="title" required defaultValue={data.title} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
               </div>
               <div className="space-y-2">
@@ -163,12 +136,12 @@ export default function EditContentClient({ type, data }: { type: string, data: 
               </div>
             </div>
             <div className="space-y-2 mt-6">
-              <label className="text-sm font-semibold text-gray-700">Language</label>
-              <input type="text" name="language" defaultValue={data.language} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
+              <label className="text-sm font-semibold text-gray-700">Subject / Category (Optional)</label>
+              <input type="text" name="subject" defaultValue={data.subject} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">Poem Content</label>
-              <textarea name="content" rows={6} defaultValue={data.content} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900 resize-none" />
+              <label className="text-sm font-semibold text-gray-700">Description</label>
+              <textarea name="description" required rows={4} defaultValue={data.description} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900 resize-none" />
             </div>
           </>
         )}
