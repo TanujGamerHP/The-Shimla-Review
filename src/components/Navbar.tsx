@@ -23,7 +23,7 @@ export default function Navbar() {
         {/* Left: Logo */}
         <div className="flex items-center gap-8 shrink-0">
           <Link href="/" className="flex items-center gap-3 group">
-            <h1 className="text-2xl font-bold tracking-tight text-primary transition-transform group-hover:scale-105" style={{ fontFamily: 'var(--font-cormorant)', textShadow: '0 0 1px currentColor' }}>
+            <h1 className="text-3xl font-extrabold tracking-tight text-primary transition-transform group-hover:scale-105" style={{ fontFamily: 'var(--font-cormorant)', textShadow: '0 0 2px currentColor' }}>
               Sandeep Sharma
             </h1>
           </Link>
@@ -48,7 +48,7 @@ export default function Navbar() {
               href="https://theshimlareview.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="ml-2 whitespace-nowrap px-4 py-1.5 bg-[#185ADB] text-white rounded font-semibold hover:bg-blue-700 transition-colors shadow-sm"
+              className="ml-4 whitespace-nowrap px-5 py-2 bg-[#185ADB] text-white rounded-md text-base font-bold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 tracking-wide"
             >
               The Simla Review
             </a>
