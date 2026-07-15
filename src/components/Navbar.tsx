@@ -12,8 +12,8 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Books', tabValue: 'Book' },
+    { name: 'Notes For Students', tabValue: 'Student Note' },
     { name: 'Research Papers', tabValue: 'Research Paper' },
-    { name: 'Student Notes', tabValue: 'Student Note' },
   ]
 
   return (
@@ -43,11 +43,12 @@ export default function Navbar() {
               </Link>
             ))}
             
+            {/* Emphasized external link */}
             <a 
               href="https://theshimlareview.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="transition-colors whitespace-nowrap px-2 py-1 text-gray-600 hover:text-accent border-b-2 border-transparent"
+              className="ml-2 whitespace-nowrap px-4 py-1.5 bg-[#185ADB] text-white rounded font-semibold hover:bg-blue-700 transition-colors shadow-sm"
             >
               The Simla Review
             </a>

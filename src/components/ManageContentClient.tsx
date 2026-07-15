@@ -56,7 +56,7 @@ export default function ManageContentClient({ items }: { items: ManageContentIte
                 activeTab === tab ? 'bg-indigo-50 text-indigo-700' : 'text-gray-500 hover:bg-gray-50'
               }`}
             >
-              {tab}
+              {tab === 'Student Note' ? 'Notes For Students' : (tab === 'Book' ? 'Books' : tab === 'Research Paper' ? 'Research Papers' : tab)}
             </button>
           ))}
         </div>
@@ -101,7 +101,7 @@ export default function ManageContentClient({ items }: { items: ManageContentIte
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full whitespace-nowrap">
-                        {item.type}
+                        {item.type === 'Student Note' ? 'Notes For Students' : item.type}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500">

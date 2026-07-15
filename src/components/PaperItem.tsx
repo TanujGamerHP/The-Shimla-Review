@@ -79,12 +79,12 @@ export default function PaperItem({ paper }: PaperProps) {
 
         <div className="flex flex-col justify-start">
           <div className="mb-2 flex items-center justify-between">
-            <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-emerald-50 text-emerald-600 border border-emerald-100">
+            <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-gray-600 border border-gray-200">
               BOOK
             </span>
           </div>
           
-          <h3 className="text-2xl sm:text-3xl font-bold mb-2 leading-tight transition-colors group-hover:text-emerald-700">
+          <h3 className="text-xl sm:text-2xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent">
             {paper.title}
           </h3>
           {paper.subtitle && (
@@ -104,7 +104,7 @@ export default function PaperItem({ paper }: PaperProps) {
                 <div className="absolute bottom-0 right-0 bg-gradient-to-l from-white via-white to-transparent pl-8 pt-0 flex items-center justify-end group-hover:from-white group-hover:via-white">
                   <button 
                     onClick={(e) => { e.preventDefault(); setIsExpanded(true); }}
-                    className="text-emerald-600 hover:underline font-bold text-sm ml-1 bg-white group-hover:bg-white"
+                    className="text-accent hover:underline font-bold text-sm ml-1 bg-white group-hover:bg-white"
                   >
                     ...more ▾
                   </button>
@@ -112,7 +112,7 @@ export default function PaperItem({ paper }: PaperProps) {
               ) : (
                 <button 
                   onClick={(e) => { e.preventDefault(); setIsExpanded(false); }}
-                  className="text-emerald-600 hover:underline font-bold text-sm mt-1 block"
+                  className="text-accent hover:underline font-bold text-sm mt-1 block"
                 >
                   less ▴
                 </button>
@@ -122,7 +122,7 @@ export default function PaperItem({ paper }: PaperProps) {
 
           <div className="mt-auto flex items-center gap-4">
             <button 
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-sm flex items-center justify-center gap-2"
+              className="bg-accent hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-sm flex items-center justify-center gap-2"
             >
               Buy Now
             </button>

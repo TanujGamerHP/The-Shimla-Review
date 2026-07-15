@@ -35,7 +35,7 @@ export default function HomeProfileClient({ adminData }: { adminData: AdminData 
   return (
     <aside className="flex flex-col w-full text-sm">
       {/* Profile Header */}
-      <div className="mb-6 flex flex-col items-center md:items-start text-center md:text-left">
+      <div className="mb-6 flex flex-col items-center text-center">
         <div className="w-[90px] h-[90px] md:w-[120px] md:h-[120px] rounded-full mb-3 md:mb-4 overflow-hidden border border-gray-100 relative">
           <img 
             src={adminData.avatarUrl || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} 
@@ -47,18 +47,7 @@ export default function HomeProfileClient({ adminData }: { adminData: AdminData 
           {adminData.name}
         </h2>
         
-        <button 
-          onClick={handleFollow}
-          disabled={isFollowing}
-          className={`w-full font-bold py-2 rounded-lg flex items-center justify-center gap-2 transition-colors mb-6
-            ${isFollowing 
-              ? 'bg-gray-100 text-gray-600 cursor-default' 
-              : 'bg-[#185ADB] hover:bg-blue-700 text-white'
-            }`}
-        >
-          {!isFollowing && <Plus size={16} strokeWidth={3} />}
-          {isFollowing ? 'Following' : 'Follow'}
-        </button>
+
 
         <div className="flex flex-col w-full text-[13px] mb-6">
 
@@ -76,7 +65,7 @@ export default function HomeProfileClient({ adminData }: { adminData: AdminData 
 
 
         {/* Social Links */}
-        <div className="w-full flex items-center justify-start gap-6 pt-4 border-t border-gray-100">
+        <div className="w-full flex items-center justify-center gap-6 pt-4 border-t border-gray-100">
           <Link href="/cv" className="flex items-center justify-center w-10 h-10 rounded-full bg-[#185ADB] hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all hover:scale-105 hover:shadow-lg">
             CV
           </Link>
