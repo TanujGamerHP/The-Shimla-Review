@@ -78,7 +78,7 @@ export default function PaperItem({ paper }: PaperProps) {
         </div>
         <div className="flex flex-col justify-start">
           
-          <h3 className="text-xl sm:text-2xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent">
+          <h3 className="text-xl sm:text-xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent">
             {paper.title}
           </h3>
           {paper.subtitle && (
@@ -141,7 +141,7 @@ export default function PaperItem({ paper }: PaperProps) {
       </div>
 
         <div className="flex flex-col justify-start">
-        <h3 className="text-xl sm:text-2xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent">
+        <h3 className="text-xl sm:text-xl font-semibold mb-2 leading-tight transition-colors group-hover:text-accent">
           {paper.title}
         </h3>
         {paper.subtitle && (
