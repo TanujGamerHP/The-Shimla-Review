@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { PrismaClient } from '@prisma/client'
 import ManageContentClient, { ManageContentItem } from '@/components/ManageContentClient'
+import MigrationButton from '@/components/MigrationButton'
 
 const prisma = new PrismaClient()
 
@@ -61,6 +62,7 @@ export default async function ManageContentPage() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Manage Published Content</h1>
         <p className="text-gray-500 mt-1">View all published books, research papers, and student notes across the site. You can edit or delete items here.</p>
+        <MigrationButton />
       </div>
 
       <ManageContentClient items={allContent} />
