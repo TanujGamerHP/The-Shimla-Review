@@ -15,6 +15,8 @@ export default async function EditContentPage({ params }: { params: Promise<{ ty
     itemData = await prisma.studentNote.findUnique({ where: { id } })
   } else if (type === 'research-paper') {
     itemData = await prisma.researchPaper.findUnique({ where: { id } })
+  } else if (type === 'misc-work') {
+    itemData = await prisma.miscWork.findUnique({ where: { id } })
   }
 
   if (!itemData) {

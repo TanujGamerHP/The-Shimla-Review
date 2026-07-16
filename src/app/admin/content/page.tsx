@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { createBook, createResearchPaper, createStudentNote } from '@/actions/admin'
+import { createBook, createResearchPaper, createStudentNote, createMiscWork } from '@/actions/admin'
 import { BookPlus, CheckCircle2, Loader2, Image as ImageIcon, FileText } from 'lucide-react'
 
 export default function ContentManager() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{type: 'success' | 'error', text: string} | null>(null)
-  const [activeTab, setActiveTab] = useState<'book' | 'paper' | 'studentNote'>('book')
+  const [activeTab, setActiveTab] = useState<'book' | 'paper' | 'studentNote' | 'miscWork'>('book')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -21,6 +21,7 @@ export default function ContentManager() {
     if (activeTab === 'book') result = await createBook(formData)
     else if (activeTab === 'paper') result = await createResearchPaper(formData)
     else if (activeTab === 'studentNote') result = await createStudentNote(formData)
+    else if (activeTab === 'miscWork') result = await createMiscWork(formData)
     
     if (result?.error) {
       setMessage({ type: 'error', text: result.error })
@@ -63,7 +64,7 @@ export default function ContentManager() {
       </div>
 
       <div className="flex gap-4 border-b border-gray-200 pb-4 overflow-x-auto">
-        {['book', 'paper', 'studentNote'].map((tab) => (
+        {['book', 'paper', 'studentNote', 'miscWork'].map((tab) => (
           <button 
             key={tab}
             onClick={() => setActiveTab(tab as any)}
@@ -76,6 +77,7 @@ export default function ContentManager() {
             {tab === 'book' && 'Publish Book'}
             {tab === 'paper' && 'Publish Paper'}
             {tab === 'studentNote' && 'Publish Student Note'}
+            {tab === 'miscWork' && 'Publish Misc Work'}
           </button>
         ))}
       </div>
@@ -161,6 +163,29 @@ export default function ContentManager() {
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Description</label>
               <textarea name="description" required rows={4} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900 resize-none" placeholder="A summary of what these notes cover..." />
+            </div>
+          </>
+        )}
+
+        {activeTab === 'miscWork' && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">Misc Work Title</label>
+                <input type="text" name="title" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="A Unique Project" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">Subtitle</label>
+                <input type="text" name="subtitle" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="Optional subtitle" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">Subject / Category (Optional)</label>
+              <input type="text" name="subject" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900" placeholder="e.g. Art, Interview" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">Description</label>
+              <textarea name="description" required rows={4} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 outline-none transition-all text-gray-900 resize-none" placeholder="A summary of this work..." />
             </div>
           </>
         )}

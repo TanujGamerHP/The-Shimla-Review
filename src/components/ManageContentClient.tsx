@@ -3,11 +3,11 @@
 import { useState } from 'react'
 import { Trash2, ExternalLink, FileText, Loader2, Search, Edit } from 'lucide-react'
 import Link from 'next/link'
-import { deleteBook, deleteResearchPaper, deleteStudentNote } from '@/actions/admin'
+import { deleteBook, deleteResearchPaper, deleteStudentNote, deleteMiscWork } from '@/actions/admin'
 
 export type ManageContentItem = {
   id: string
-  type: 'Book' | 'Research Paper' | 'Student Note'
+  type: 'Book' | 'Research Paper' | 'Student Note' | 'Misc Work'
   title: string
   views: number
   downloads: number
@@ -16,11 +16,11 @@ export type ManageContentItem = {
 }
 
 export default function ManageContentClient({ items }: { items: ManageContentItem[] }) {
-  const [activeTab, setActiveTab] = useState<'All' | 'Book' | 'Research Paper' | 'Student Note'>('All')
+  const [activeTab, setActiveTab] = useState<'All' | 'Book' | 'Research Paper' | 'Student Note' | 'Misc Work'>('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [deletingId, setDeletingId] = useState<string | null>(null)
 
-  const tabs = ['All', 'Book', 'Research Paper', 'Student Note']
+  const tabs = ['All', 'Book', 'Research Paper', 'Student Note', 'Misc Work']
 
   const filteredItems = items.filter(item => {
     const matchesTab = activeTab === 'All' || item.type === activeTab
@@ -36,6 +36,7 @@ export default function ManageContentClient({ items }: { items: ManageContentIte
       if (type === 'Book') await deleteBook(id)
       else if (type === 'Research Paper') await deleteResearchPaper(id)
       else if (type === 'Student Note') await deleteStudentNote(id)
+      else if (type === 'Misc Work') await deleteMiscWork(id)
     } catch (error) {
       alert('Failed to delete content.')
     } finally {

@@ -6,10 +6,11 @@ const prisma = new PrismaClient()
 
 export default async function ManageContentPage() {
   // Fetch all content concurrently
-  const [books, papers, studentNotes] = await Promise.all([
+  const [books, papers, studentNotes, miscWorks] = await Promise.all([
     prisma.book.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.researchPaper.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.studentNote.findMany({ orderBy: { createdAt: 'desc' } }),
+    prisma.miscWork.findMany({ orderBy: { createdAt: 'desc' } }),
   ])
 
   // Map into unified array
@@ -40,6 +41,15 @@ export default async function ManageContentPage() {
       downloads: sn.downloads,
       slug: sn.slug,
       createdAt: sn.createdAt
+    })),
+    ...miscWorks.map(mw => ({
+      id: mw.id,
+      type: 'Misc Work' as const,
+      title: mw.title,
+      views: mw.views,
+      downloads: mw.downloads,
+      slug: mw.slug,
+      createdAt: mw.createdAt
     }))
   ]
 

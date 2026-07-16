@@ -15,10 +15,11 @@ export default async function Home() {
   if (!user) return <div className="p-10">Database not seeded. Run seed script.</div>
 
   // Fetch all content types across the site
-  const [books, researchPapers, studentNotes] = await Promise.all([
+  const [books, researchPapers, studentNotes, miscWorks] = await Promise.all([
     prisma.book.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.researchPaper.findMany({ orderBy: { createdAt: 'desc' } }),
-    prisma.studentNote.findMany({ orderBy: { createdAt: 'desc' } })
+    prisma.studentNote.findMany({ orderBy: { createdAt: 'desc' } }),
+    prisma.miscWork.findMany({ orderBy: { createdAt: 'desc' } })
   ])
 
   const allItems: ProfileFeedItem[] = [
@@ -37,6 +38,11 @@ export default async function Home() {
       id: sn.id, type: 'Student Note', title: sn.title, subtitle: sn.subtitle, abstract: sn.description,
       institution: sn.subject, views: sn.views, downloads: sn.downloads, thumbnailUrl: sn.coverImageUrl,
       createdAt: sn.createdAt, slug: sn.slug, downloadUrl: sn.downloadUrl
+    })),
+    ...miscWorks.map(mw => ({
+      id: mw.id, type: 'Misc Work', title: mw.title, subtitle: mw.subtitle, abstract: mw.description,
+      institution: mw.subject, views: mw.views, downloads: mw.downloads, thumbnailUrl: mw.coverImageUrl,
+      createdAt: mw.createdAt, slug: mw.slug, downloadUrl: mw.downloadUrl
     }))
   ].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
 

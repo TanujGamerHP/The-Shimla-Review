@@ -149,6 +149,45 @@ export async function createStudentNote(formData: FormData) {
   }
 }
 
+export async function createMiscWork(formData: FormData) {
+  try {
+    const admin = await requireSuperAdmin()
+    
+    const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
+    const description = formData.get('description') as string
+    const subject = formData.get('subject') as string
+    
+    const imageFile = formData.get('coverImage') as File
+    const pdfFile = formData.get('pdfDocument') as File
+    
+    const coverImageUrl = await uploadFile(imageFile, 'misc-works', 'misc-cover')
+    const downloadUrl = await uploadFile(pdfFile, 'pdfs', 'misc-doc')
+
+    const slug = `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')}-${Math.random().toString(36).substring(2, 8)}`
+
+    await prisma.miscWork.create({
+      data: {
+        title,
+        subtitle,
+        description,
+        subject,
+        slug,
+        coverImageUrl,
+        downloadUrl,
+        authorId: admin.id,
+        status: 'PUBLISHED'
+      }
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin/content')
+    return { success: true }
+  } catch (error: any) {
+    return { error: error.message || 'Failed to create misc work' }
+  }
+}
+
 export async function deleteBook(id: string) {
   try {
     await requireSuperAdmin()
@@ -182,6 +221,18 @@ export async function deleteStudentNote(id: string) {
     return { success: true }
   } catch (error: any) {
     return { error: error.message || 'Failed to delete student note' }
+  }
+}
+
+export async function deleteMiscWork(id: string) {
+  try {
+    await requireSuperAdmin()
+    await prisma.miscWork.delete({ where: { id } })
+    revalidatePath('/')
+    revalidatePath('/admin/manage-content')
+    return { success: true }
+  } catch (error: any) {
+    return { error: error.message || 'Failed to delete misc work' }
   }
 }
 
@@ -277,7 +328,37 @@ export async function updateStudentNote(id: string, formData: FormData) {
   }
 }
 
-export async function incrementDownloads(id: string, type: 'book' | 'paper' | 'studentNote') {
+export async function updateMiscWork(id: string, formData: FormData) {
+  try {
+    await requireSuperAdmin()
+    
+    const title = formData.get('title') as string
+    const subtitle = formData.get('subtitle') as string
+    const description = formData.get('description') as string
+    const subject = formData.get('subject') as string
+    
+    const imageFile = formData.get('coverImage') as File | null
+    const pdfFile = formData.get('pdfDocument') as File | null
+    
+    const data: any = { title, subtitle, description, subject }
+    
+    if (imageFile && imageFile.size > 0) {
+      data.coverImageUrl = await uploadFile(imageFile, 'misc-works', 'misc-cover')
+    }
+    if (pdfFile && pdfFile.size > 0) {
+      data.downloadUrl = await uploadFile(pdfFile, 'pdfs', 'misc-doc')
+    }
+
+    await prisma.miscWork.update({ where: { id }, data })
+    revalidatePath('/')
+    revalidatePath('/admin/manage-content')
+    return { success: true }
+  } catch (error: any) {
+    return { error: error.message || 'Failed to update misc work' }
+  }
+}
+
+export async function incrementDownloads(id: string, type: 'book' | 'paper' | 'studentNote' | 'miscWork') {
   try {
     if (type === 'book') {
       await prisma.book.update({
@@ -291,6 +372,11 @@ export async function incrementDownloads(id: string, type: 'book' | 'paper' | 's
       })
     } else if (type === 'studentNote') {
       await prisma.studentNote.update({
+        where: { id },
+        data: { downloads: { increment: 1 } }
+      })
+    } else if (type === 'miscWork') {
+      await prisma.miscWork.update({
         where: { id },
         data: { downloads: { increment: 1 } }
       })

@@ -17,8 +17,9 @@ export async function searchGlobal(query: string): Promise<SearchResult[]> {
 
   const search = query.trim()
 
-  const [books, researchPapers, studentNotes] = await Promise.all([
+  const [books, researchPapers, studentNotes, miscWorks] = await Promise.all([
     prisma.book.findMany({
+
       where: { title: { contains: search } },
       take: 5
     }),
@@ -29,13 +30,18 @@ export async function searchGlobal(query: string): Promise<SearchResult[]> {
     prisma.studentNote.findMany({
       where: { title: { contains: search } },
       take: 5
+    }),
+    prisma.miscWork.findMany({
+      where: { title: { contains: search } },
+      take: 5
     })
   ])
 
   const results: SearchResult[] = [
     ...books.map(b => ({ id: b.id, title: b.title, type: 'Book', slug: b.slug, url: `/work/book/${b.slug}` })),
     ...researchPapers.map(r => ({ id: r.id, title: r.title, type: 'Research Paper', slug: r.slug, url: `/work/research-paper/${r.slug}` })),
-    ...studentNotes.map(sn => ({ id: sn.id, title: sn.title, type: 'Student Note', slug: sn.slug, url: `/work/student-note/${sn.slug}` }))
+    ...studentNotes.map(sn => ({ id: sn.id, title: sn.title, type: 'Student Note', slug: sn.slug, url: `/work/student-note/${sn.slug}` })),
+    ...miscWorks.map(mw => ({ id: mw.id, title: mw.title, type: 'Misc Work', slug: mw.slug, url: `/work/misc-work/${mw.slug}` }))
   ]
 
   // Sort logic: "starts with" matches appear first, followed by "contains" matches.
