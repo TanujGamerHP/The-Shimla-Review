@@ -12,8 +12,9 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Books', tabValue: 'Book' },
-    { name: 'Notes For Students', tabValue: 'Student Note' },
     { name: 'Research Papers', tabValue: 'Research Paper' },
+    { name: 'Notes For Students', tabValue: 'Student Note' },
+    { name: 'Misc Works', tabValue: 'Misc Work' },
   ]
 
   return (
