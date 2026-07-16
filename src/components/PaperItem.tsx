@@ -85,7 +85,7 @@ export default function PaperItem({ paper }: PaperProps) {
             <p className="text-lg text-gray-600 mb-2 font-medium">{paper.subtitle}</p>
           )}
           
-          <p className="text-xl font-semibold text-gray-900 mb-4">
+          <p className="text-xl font-semibold text-gray-800 mb-4">
             {paper.price ? `₹${paper.price}` : 'Price on Request'}
           </p>
           

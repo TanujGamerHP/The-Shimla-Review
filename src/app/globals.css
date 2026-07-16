@@ -15,9 +15,9 @@
 @layer base {
   :root {
     --background: #FFFFFF;
-    --foreground: #0F172A;
-    --primary: #0A192F;
-    --secondary: #334155;
+    --foreground: #1F2937;
+    --primary: #1F2937;
+    --secondary: #374151;
     --accent: #2563EB;
     --border: #E2E8F0;
     --success: #10B981;
