@@ -107,11 +107,6 @@ export default function PaperItem({ paper }: PaperProps) {
             >
               Buy Now
             </button>
-            
-            <div className="flex items-center gap-1.5 text-sm text-gray-500 font-medium ml-4">
-              <Eye size={16} className="text-gray-400" />
-              <span className="tabular-nums">{views.toLocaleString()}</span>
-            </div>
           </div>
         </div>
       </motion.div>
