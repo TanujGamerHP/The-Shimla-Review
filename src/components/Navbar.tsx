@@ -24,7 +24,7 @@ export default function Navbar() {
         {/* Left: Logo */}
         <div className="flex items-center gap-8 shrink-0 w-full md:w-auto justify-center md:justify-start">
           <Link href="/" className="flex items-center gap-3 group">
-            <h1 className="text-3xl font-extrabold tracking-tight text-primary transition-transform group-hover:scale-105" style={{ fontFamily: 'var(--font-cormorant)' }}>
+            <h1 className="text-3xl font-extrabold tracking-tight text-blue-600 transition-transform group-hover:scale-105" style={{ fontFamily: 'var(--font-cormorant)' }}>
               Sandeep Sharma
             </h1>
           </Link>
